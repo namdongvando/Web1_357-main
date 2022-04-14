@@ -1,0 +1,62 @@
+--tìm  các sản phẩm có chứa từ 'chai'
+SELECT * FROM `products` 
+WHERE `product_name` like '%chai%'
+-- 10 sản pham có gia lớn nhất
+SELECT * FROM `products` 
+order by `standard_cost` DESC 
+limit 0,10
+-- lấy 10 danh muc có số sản phẩm nhiều nhất
+SELECT `category`, COUNT(*) as `SoSanPham` 
+FROM `products` 
+GROUP BY `category` 
+order by `SoSanPham` DESC limit 0,10 
+
+-- các sảm phẩm có giá từ 10->30 và theo từ khóa
+SELECT * FROM `products` WHERE 
+`product_name` like '%ch%' AND
+`standard_cost` > 10 and `standard_cost` < 30
+order by `standard_cost` DESC
+
+-- tổng tiền đơn hàng 81
+SELECT sum(`quantity` * `unit_price`) as `TongTien` 
+FROM `order_details` 
+where `order_id` = 81
+GROUP by `order_id`
+
+-- lấy thông tin sản phẩn và thành tiền
+SELECT `products`.*,(`order_details`.`quantity`*`order_details`.`unit_price`) as `thanhtien` 
+FROM `order_details`,`products`
+WHERE `order_details`.`product_id` = `products`.`id`
+and `order_details`.`order_id` = 81
+-- lấy các don hang trong tháng 4
+-- cach 1
+SELECT * FROM `orders` 
+WHERE
+`order_date` > '2006-04-01'
+and `order_date` < '2006-04-30'
+
+-- tổng sản phản theo mã của các đơn hàng tháng 4
+SELECT `od`.`product_id`,sum(`od`.`quantity`)
+FROM `orders` as `o`,`order_details` as `od` 
+WHERE
+`o`.`id` = `od`.order_id and
+`o`.`order_date` > '2006-04-01'
+and `o`.`order_date` < '2006-04-30'
+GROUP by `od`.`product_id`
+
+-- 
+SELECT `products`.*, `od`.`product_id`,sum(`od`.`quantity`) as `TongSoLuong` FROM `orders` as `o` ,`order_details` as `od` ,`products` WHERE `products`.`id` = `od`.`product_id` and `o`.`id` = `od`.order_id and `o`.`order_date` > '2006-04-01' and `o`.`order_date` < '2006-04-30' GROUP by `od`.`product_id`
+
+-- các don hàng có tổng tiền > 2000
+SELECT `order_id` ,sum(`quantity` * `unit_price`) as `TongTien` 
+FROM `order_details` 
+GROUP by `order_id`
+HAVING  sum(`quantity` * `unit_price`) > 2000
+ORDER by `TongTien`
+
+-- giảm gia 10% cho dơn hàng > 2000
+UPDATE `order_details` set `discount`=(`unit_price`*`quantity`*0.1)  WHERE `order_id` 
+in (SELECT `order_id`
+FROM `order_details` 
+GROUP by `order_id`
+HAVING  sum(`quantity` * `unit_price`) > 2000)

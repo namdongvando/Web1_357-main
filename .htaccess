@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule public - [L]
+# tất cả request phải chạy qua file php
+RewriteRule (.*) index.php [R=301,L]

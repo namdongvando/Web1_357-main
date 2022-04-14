@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+    <form action="" method="post">
+        <label>
+            So a:
+        </label>
+        <input type="text" value="" placeholder="Nhập Số A" id="txtSoA">
+        <label>
+            So b:
+        </label>
+        <input type="text" value="" placeholder="Nhập Số B" id="txtSoB">
+        <button onclick="TinhTong()" type="button">Tính</button>
+    </form>
+
+    <div id="KetQua"></div>
+
+
+    <script>
+        const TinhTong = function () {
+            // alert("Tinh Tong");
+            // lấy ra 2 thẻ input A,B
+            var inputSoA = document.getElementById("txtSoA");
+            var inputSoB = document.getElementById("txtSoB");
+            // ep kiểu
+            var soA  = parseFloat(inputSoA.value);
+            var soB  = parseFloat(inputSoB.value);
+
+            var lblKetQua = document.getElementById("KetQua");
+            lblKetQua.innerHTML = soA + soB;
+
+        }
+        function TinhHieu() {
+        }
+
+        const TinhThuong=()=>{
+
+        }
+
+        // tạo hộp thoại
+        // alert("X`in chào!");
+        // var kiemTra = confirm("Bạn có muốn xóa không?");
+        // debugger;
+        // console.log(kiemTra);
+        // var a = prompt("Nhập A", "0");    
+        // var b = prompt("Nhập B", "0");  
+
+        // console.log(typeof a);
+        // console.log(typeof b);
+        // // ép kiểu string to number
+        // a = parseFloat(a);
+        // // ép kiểu string to number
+        // b = parseFloat(b);
+        // console.log(typeof a);
+        // console.log(typeof b);
+        // // alert(a+b);
+        // var ketQuaElement = document.getElementById("KetQua");
+        // ketQuaElement.innerHTML = a + b;
+    </script>
+</body>
+
+</html>

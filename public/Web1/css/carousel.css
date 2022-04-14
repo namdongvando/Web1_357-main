@@ -1,0 +1,33 @@
+.mycarousel-control{
+    position: absolute;
+    top: 45%; 
+    display: block;
+    padding: 5px;
+    background-color: #fff8;
+    color: #000;
+    border-radius: 100%;
+    min-width: 40px;
+    min-height: 40px; 
+    text-align: center;
+    line-height: 30px;
+    opacity: 0;
+    transition: all 1s;
+}
+/* khi dua chuot vào */
+.carousel:hover .mycarousel-control{
+    opacity: 1;
+    transition: all 1s;
+}
+.carousel:hover .left.mycarousel-control{
+    left: 15px;
+}
+.carousel:hover .right.mycarousel-control{
+    right: 15px;
+}
+/* vi trí mac dinh */
+.left.mycarousel-control{
+    left: 100px;
+}
+.right.mycarousel-control{
+    right: 100px;
+}
