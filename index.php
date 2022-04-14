@@ -1,24 +1,26 @@
 <?php
 spl_autoload_register(function ($className) {
     //echo  "____" . $className . "____";
-    include("{$className}.php");
+    include_once(__DIR__."/{$className}.php");
 });
 //  tat ca request phai chay qua file này
 // trừ public
 // include("App\backend\Controller\BaseController.php");
 // include("App\backend\Controller\danhmucController.php");
 
-$uri = $_SERVER["REQUEST_URI"];
-// chuyển chuỗi thành mảng string2array
-$a = explode("/", $uri);
-// var_dump($a);
-$ControllerName = $a[1];
-$ActionName = isset($a[2]) ? $a[2] : "";
-$app = new Appliction();
-$app->setParams($a);
-$app->setControllerName($ControllerName);
-$app->setActionName($ActionName);
-$className = "App\\backend\\Controller\\{$ControllerName}Controller";
+// $uri = $_SERVER["REQUEST_URI"];
+// // chuyển chuỗi thành mảng string2array
+// $a = explode("/", $uri);
+// // var_dump($a);
+// $ControllerName = $a[1];
+// $ActionName = isset($a[2]) ? $a[2] : "";
+$app = new Applications();
+// $app->setParams($a);
+// $app->setControllerName($ControllerName);
+// $app->setActionName($ActionName);
+$className = "App\\{$app->getModule()}\\Controller\\{$app->getController()}Controller";
+
+$ActionName = $app->getAction();
 // echo $className;
 if (file_exists($className . ".php")) {
     // có controller;
@@ -36,9 +38,7 @@ if (file_exists($className . ".php")) {
     $Controller = new App\backend\Controller\indexController();
     $Controller->index();
 }
-
-
-
+  
 // echo $_GET["v"];
 
 use App\backend\Controller\BaseController;
