@@ -1,4 +1,6 @@
 <?php
+session_start();
+ob_start();
 spl_autoload_register(function ($className) {
     //echo  "____" . $className . "____";
     include_once(__DIR__."/{$className}.php");
