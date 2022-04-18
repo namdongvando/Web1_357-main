@@ -2,5 +2,11 @@
   "require": {
     "phpmailer/phpmailer": "^6.6",
     "namdongvando/rpfbc": "^3.22"
-  }  
+  },
+  "autoload": {
+    "psr-4": {},
+    "files": [
+      "Applications.php"
+    ]
+  }
 }
