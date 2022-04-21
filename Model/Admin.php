@@ -30,6 +30,32 @@ class Admin extends DB
         $this->District = isset($admin["District"]) ? $admin["District"] : null;
         $this->Ward = isset($admin["Ward"]) ? $admin["Ward"] : null;
     }
+
+    public static function CurentUser()
+    {
+        return $_SESSION["Quantri"];
+    }
+    // sửa cai gì o dâu
+    public function UpdateUser($user)
+    {
+        $sql = "UPDATE `nn_admin` SET 
+        `Fullname` = '{$user["Fullname"]}', 
+        `Email` = '{$user["Email"]}', 
+        `Phone` = '{$user["Phone"]}', 
+        `Address` = '{$user["Address"]}', 
+        `Province` = '{$user["Province"]}', 
+        `District` = '{$user["District"]}', 
+        `Ward` = '{$user["Ward"]}' 
+        WHERE  `Id` = '{$user["Id"]}'";
+        $result =  $this->query($sql);
+        return $result;
+    }
+
+    public function SetCurentUser($user)
+    { 
+        $_SESSION["Quantri"] = $user;
+    }
+
     // SELECT * FROM `nn_admin` 
     //WHERE `Username` = "teonv" 
     //and `Password` = '123456'

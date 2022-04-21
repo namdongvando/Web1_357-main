@@ -1,6 +1,12 @@
-<!-- index authentication
-Form Sửa thông tin người đăng nhập -->
-<!-- Content Header (Page header) -->
+ <?php
+
+use Model\Admin;
+// thong tin cua tai khoan dang dang nhap
+ $user = new Admin(Admin::CurentUser());
+
+ ?>
+
+
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -36,32 +42,33 @@ Form Sửa thông tin người đăng nhập -->
             <div class="card-body">
                 <div class="form-group">
                     <label for="">Họ & Tên</label>
-                    <input type="text" name="user[HoTen]" class="form-control" placeholder="Họ & Tên" aria-describedby="helpId">
+                    <input value="<?php echo $user->Fullname; ?>" type="text" name="user[HoTen]" class="form-control" placeholder="Họ & Tên" aria-describedby="helpId">
                 </div>
                 <div class="form-group">
                     <label for="">SĐT</label>
-                    <input type="text" name="user[SDT]" class="form-control" placeholder="SĐT" aria-describedby="helpId">
+                    <input value="<?php echo $user->Phone; ?>" type="text" name="user[SDT]" class="form-control" placeholder="SĐT" aria-describedby="helpId">
                 </div>
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input type="text" name="user[Email]" class="form-control" placeholder="Email" aria-describedby="helpId">
+                    <input value="<?php echo $user->Email; ?>" type="text" name="user[Email]" class="form-control" placeholder="Email" aria-describedby="helpId">
                 </div>
                 <div class="form-group">
                     <label for="">Địa Chỉ</label>
-                    <input type="text" name="user[Email]" class="form-control" placeholder="Địa Chỉ" aria-describedby="helpId">
+                    <input value="<?php echo $user->Address; ?>" type="text" name="user[DiaChi]" class="form-control" placeholder="Địa Chỉ" aria-describedby="helpId">
                 </div>
                 <div class="row">
                     <div class="col-4 form-group">
                         <label for="">Tỉnh</label>
-                        <input type="text" name="user[Tinh]" class="form-control" placeholder="" aria-describedby="helpId">
+                        <select data-value="<?php echo $user->Province ?>" id="tinhThanh" name="user[Tinh]" class="form-control"> </select>
                     </div>
                     <div class="col-4 form-group">
                         <label for="">Huyện</label>
-                        <input type="text" name="user[Huyen]" class="form-control" placeholder="Email" aria-describedby="helpId">
+                        <select data-value="<?php echo $user->District ?>" id="quanHuyen" name="user[Huyen]" class="form-control"> </select>
+
                     </div>
                     <div class="col-4 form-group">
                         <label for="">Xã</label>
-                        <input type="text" name="user[Xa]" class="form-control" placeholder="Email" aria-describedby="helpId">
+                        <select data-value="<?php echo $user->Ward ?>" id="phuongXa" name="user[Xa]" class="form-control"> </select>
                     </div>
                 </div>
 
@@ -78,8 +85,7 @@ Form Sửa thông tin người đăng nhập -->
             </div>
             <!-- /.card-footer-->
         </div>
-    </form>
-
-    <!-- /.card -->
+    </form> 
 </section>
 <!-- /.content -->
+<script src="/public/TinhThanh/tinhthanh.js" ></script>

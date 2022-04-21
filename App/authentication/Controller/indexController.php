@@ -2,6 +2,7 @@
 namespace App\authentication\Controller;
 
 use Applications;
+use Model\Admin;
 
 class indexController extends Applications
 {
@@ -22,6 +23,32 @@ class indexController extends Applications
     public function index()
     { 
            // echo "đã đăng nhập";
+        if(isset($_POST["user"])) {
+            // đã bấm vào  nut luu
+            //var_dump($_POST);
+            // 
+            $u = $_POST["user"];
+            
+            $admin = new Admin();
+            // thông tin tài khoản dang đăng nhập
+            $user = Admin::CurentUser();
+            //var_dump($user);
+            $user["Fullname"] = $u["HoTen"]; 
+            $user["Phone"] = $u["SDT"]; 
+            $user["Email"] = $u["Email"]; 
+            $user["Address"] = $u["DiaChi"]; 
+            $user["Province"] = $u["Tinh"]; 
+            $user["District"] = $u["Huyen"]; 
+            $user["Ward"] = $u["Xa"]; 
+
+            $admin->UpdateUser($user);
+
+            Admin::SetCurentUser($user);
+
+
+        }
+           
+
             $this->View();
     }
     public function logout()
