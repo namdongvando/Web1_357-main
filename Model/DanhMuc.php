@@ -62,10 +62,29 @@ class DanhMuc  extends DB implements IModelCRUD
 	 *
 	 * @return mixed
 	 */
-	function GetPaging($params, $pageIndex, $pageNumber)
-	{
-		//SELECT * FROM `nn_danhmuc` WHERE `Name` like '%a%'
-
+	function GetPaging(
+		$params,
+		$pageIndex,
+		$pageNumber,
+		&$totalRows
+	) {
+		$keyword = isset($params["keyword"])
+			? $params["keyword"] : '';
+		// cau lenh truy van
+		$sql = "SELECT * FROM 
+		`nn_danhmuc` WHERE `Name` like '%{$keyword}%' or
+		`Id` like '%{$keyword}%'";
+		$result = $this->query($sql);
+		// var_dump($result);
+		if ($result) {
+			// to so dong tra ve
+			$totalRows =  $result->num_rows;
+		}
+		// tinh vi tri cac dong cần tra ve
+		$start = ($pageIndex - 1) * $pageNumber;
+		// lấy các dòng
+		$sql .= " limit {$start}, $pageNumber";
+		return $this->query($sql);
 	}
 
 	/**

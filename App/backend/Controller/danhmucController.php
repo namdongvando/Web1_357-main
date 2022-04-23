@@ -2,10 +2,17 @@
 
 namespace App\backend\Controller;
 
-class danhmucController extends BaseController
+class danhmucController extends indexController
 {
+    function __construct() {
+        parent::__construct();
+	}
     public function index()
     {
-        echo "danhmuc>index";
+        $this->View();
+        // echo "danhmuc>index";
     }
+	/**
+	 */
+	
 }
