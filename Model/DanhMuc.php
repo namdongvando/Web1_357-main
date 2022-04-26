@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class DanhMuc  extends DB implements IModelCRUD
+class DanhMuc extends DB implements IModelCRUD
 {
 	public $Id;
 	public $Name;
@@ -44,6 +44,12 @@ class DanhMuc  extends DB implements IModelCRUD
 	 */
 	function Put($item)
 	{
+		$sql = "UPDATE `nn_danhmuc` SET  
+		`Name`='{$item["Name"]}',
+		`Decription`='{$item["Decription"]}'
+		,`IsDelete`='{$item["IsDelete"]}' 
+		WHERE `Id`  = {$item["Id"]}";
+		$this->query($sql);
 	}
 
 	/**
@@ -67,7 +73,8 @@ class DanhMuc  extends DB implements IModelCRUD
 		$pageIndex,
 		$pageNumber,
 		&$totalRows
-	) {
+		)
+	{
 		$keyword = isset($params["keyword"])
 			? $params["keyword"] : '';
 		// cau lenh truy van
@@ -78,7 +85,7 @@ class DanhMuc  extends DB implements IModelCRUD
 		// var_dump($result);
 		if ($result) {
 			// to so dong tra ve
-			$totalRows =  $result->num_rows;
+			$totalRows = $result->num_rows;
 		}
 		// tinh vi tri cac dong cần tra ve
 		$start = ($pageIndex - 1) * $pageNumber;
@@ -95,6 +102,9 @@ class DanhMuc  extends DB implements IModelCRUD
 	 */
 	function Delete($id)
 	{
+		$sql = "UPDATE `nn_danhmuc` SET 
+		`IsDelete`='1' WHERE `Id` = {$id}";
+		$this->query($sql);
 	}
 
 	/**
@@ -114,7 +124,16 @@ class DanhMuc  extends DB implements IModelCRUD
 	 */
 	function GetById($id)
 	{
+		$sql = "SELECT * FROM `nn_danhmuc` WHERE `Id` = {$id} ";
+		$result = $this->query($sql);
+		if ($result->num_rows > 0) {
+			return $result->fetch_assoc();
+		}
+		return null;
 	}
-	/**
-	 */
+	public function IsDelete()
+	{
+		$a = ["Hiện", "Ẩn"];
+		return $a[$this->IsDelete];
+	}
 }

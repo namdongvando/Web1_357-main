@@ -16,22 +16,21 @@ class Applications
         $this->InitUri($uri);
     }
     public function setLayout($Layout)
-    { 
+    {
         self::$Layout = $Layout;
-    }
-// tra ve ten module
+    } // tra ve ten module
     public function getModule()
-    { 
+    {
         return self::$ModuleName;
     }
     // tra ve ten6 controller
     public function getController()
-    { 
+    {
         return self::$ControllerName;
     }
     // lay ten6 cua action
     public function getAction()
-    { 
+    {
         return self::$ActionName;
     }
 
@@ -139,14 +138,15 @@ class Applications
         $_layout = self::$Layout;
         if ($_layout == null) {
             include $_Content;
-        } else {
+        }
+        else {
             include $_layout;
         }
     }
 
     public function getParams($index = null)
     {
-        if ($index != null) {
+        if ($index !== null) {
             if (isset(self::$Params[$index])) {
                 return self::$Params[$index];
             }

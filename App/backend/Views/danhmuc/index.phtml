@@ -43,52 +43,54 @@ $dataDanhMuc = $dm->GetPaging([], $indexPage, $pageNumber, $totalRows);
             </div>
         </div>
     </form>
-    <a href="" class="float-right btn btn-primary">Tạo mới</a>
+    <a href="/backend/danhmuc/post" class="float-right btn btn-primary">Tạo mới</a>
     <table class="table">
         <thead>
             <tr>
                 <th>Mã </th>
                 <th>Tên</th>
                 <th>Mô Tả</th>
+                <th>Ẩn/Hiện</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            if ($dataDanhMuc != null) {
-                while ($row = $dataDanhMuc->fetch_array()) {
-                    $_item = new DanhMuc($row);
-            ?>
+if ($dataDanhMuc != null) {
+    while ($row = $dataDanhMuc->fetch_array()) {
+        $_item = new DanhMuc($row);
+?>
                     <tr>
                         <td scope="row"><?php echo $_item->Id; ?></td>
                         <td><?php echo $_item->Name; ?></td>
                         <td><?php echo $_item->Decription; ?></td>
+                        <td><?php echo $_item->IsDelete(); ?></td>
                         <td>
-                            <a href="#" class="btn btn-danger">Xóa</a>
-                            <a href="#" class="btn btn-primary">Sửa</a>
+                            <a onclick="return confirm('Bạn có muốn xóa danh mục này không?')" href="/backend/danhmuc/delete/<?php echo $_item->Id; ?>" class="btn btn-danger">Xóa</a>
+                            <a href="/backend/danhmuc/put/<?php echo $_item->Id; ?>" class="btn btn-primary">Sửa</a>
                         </td>
                     </tr>
             <?php
-                }
-            }
-            ?>
-
+    }
+}
+?>
+ 
 
         </tbody>
     </table>
 
     <?php
-    $_GET["page"] = isset($_GET["page"]) ? $_GET["page"] : 1;
-    $trangHienTai = intval($_GET["page"]);
-    $trangHienTai = max(1, $trangHienTai);
-    $soTrang = ceil($totalRows / $pageNumber);
+$_GET["page"] = isset($_GET["page"]) ? $_GET["page"] : 1;
+$trangHienTai = intval($_GET["page"]);
+$trangHienTai = max(1, $trangHienTai);
+$soTrang = ceil($totalRows / $pageNumber);
 
-    echo Common::PhanTrang(
-        $soTrang,
-        $trangHienTai,
-        "/backend/danhmuc/index/?page=[i]&number={$pageNumber}"
-    );
-    ?>
+echo Common::PhanTrang(
+    $soTrang,
+    $trangHienTai,
+    "/backend/danhmuc/index/?page=[i]&number={$pageNumber}"
+);
+?>
 
 </section>
 <!-- /.content -->

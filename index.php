@@ -3,7 +3,7 @@ session_start();
 ob_start();
 spl_autoload_register(function ($className) {
     //echo  "____" . $className . "____";
-    include_once(__DIR__."/{$className}.php");
+    include_once(__DIR__ . "/{$className}.php");
 });
 //  tat ca request phai chay qua file này
 // trừ public
@@ -31,16 +31,19 @@ if (file_exists($className . ".php")) {
     if (method_exists($Controller, $ActionName)) {
         // có action
         $Controller->$ActionName();
-    } else {
+    }
+    else {
         // action mặc định
         $Controller->index();
     }
-} else {
+}
+else {
     // không có controller
     $Controller = new App\backend\Controller\indexController();
     $Controller->index();
 }
-  
+
+
 // echo $_GET["v"];
 
 use App\backend\Controller\BaseController;

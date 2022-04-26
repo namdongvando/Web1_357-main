@@ -34,10 +34,10 @@ $admin = new Admin($_SESSION["Quantri"]);
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="/public/index3.html" class="nav-link">Home</a>
+          <a href="/backend/" class="nav-link">Trang chủ</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
+          <a href="/backend/danhmuc/" class="nav-link">Danh Mục</a>
         </li>
       </ul>
 
@@ -181,8 +181,8 @@ $admin = new Admin($_SESSION["Quantri"]);
           <div class="info">
             <a href="#" class="d-block">
               <?php
-              echo $admin->Fullname;
-              ?>
+echo $admin->Fullname;
+?>
             </a>
             <a href="/authentication/index/logout" onclick="return(confirm('Bạn có muốn thoát không?'))">Thoát</a>
           </div>
@@ -244,8 +244,8 @@ $admin = new Admin($_SESSION["Quantri"]);
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <?php
-      include $_Content;
-      ?>
+include $_Content;
+?>
     </div>
     <!-- /.content-wrapper -->
 
