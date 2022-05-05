@@ -19,6 +19,10 @@ class Admin extends DB implements IModelCRUD
     {
         // gọi kết nối database
         parent::__construct();
+        if (!is_array($admin)) {
+            $id = $admin;
+            $admin = $this->GetById($id);
+        }
         $this->Id = isset($admin["Id"]) ? $admin["Id"] : null;
         $this->Fullname = isset($admin["Fullname"]) ? $admin["Fullname"] : null;
         $this->Username = isset($admin["Username"]) ? $admin["Username"] : null;
@@ -29,6 +33,16 @@ class Admin extends DB implements IModelCRUD
         $this->Province = isset($admin["Province"]) ? $admin["Province"] : null;
         $this->District = isset($admin["District"]) ? $admin["District"] : null;
         $this->Ward = isset($admin["Ward"]) ? $admin["Ward"] : null;
+    }
+
+
+    public function ResetPassword($id, $newPassword)
+    {
+        // B1 lấy thông tin của tài khoản từ database
+        $admin = $this->GetById($id);
+        // B2 cập nhật mật khẩu -> mã hóa mật khẩu
+        $admin["Password"] = sha1($newPassword);
+        return $this->Put($admin);
     }
 
     public static function CurentUser()
@@ -114,7 +128,6 @@ class Admin extends DB implements IModelCRUD
 `District`='{$item["District"]}',
 `Ward`='{$item["Ward"]}' WHERE `Id`='{$item["Id"]}'";
         return $this->query($sql);
-
     }
 
     /**
@@ -135,6 +148,8 @@ class Admin extends DB implements IModelCRUD
     {
         $sql = "SELECT * FROM `nn_admin` WHERE `Id` = {$id}";
         $result = $this->query($sql);
+        if ($result == null)
+            return null;
         if ($result->num_rows > 0) {
             return $result->fetch_assoc();
         }
@@ -174,7 +189,7 @@ class Admin extends DB implements IModelCRUD
     function Delete($id)
     {
         // return $this->DeleteQuery("nn_admin", "`Id` = '{$id}'");
-        return $this->DeleteQuery("nn_admin", ["Id" => $id]);
+        return $this->DeleteQuery("nn_admin", $this->WhereEq("Id", $id));
     }
 
     /**
@@ -185,7 +200,5 @@ class Admin extends DB implements IModelCRUD
      */
     function Remove($id)
     {
-
-
     }
 }

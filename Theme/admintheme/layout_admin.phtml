@@ -39,6 +39,9 @@ $admin = new Admin($_SESSION["Quantri"]);
         <li class="nav-item d-none d-sm-inline-block">
           <a href="/backend/danhmuc/" class="nav-link">Danh Mục</a>
         </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="/backend/sanpham/" class="nav-link">Sản Phẩm</a>
+        </li>
       </ul>
 
       <!-- Right navbar links -->
@@ -181,8 +184,8 @@ $admin = new Admin($_SESSION["Quantri"]);
           <div class="info">
             <a href="#" class="d-block">
               <?php
-echo $admin->Fullname;
-?>
+              echo $admin->Fullname;
+              ?>
             </a>
             <a href="/authentication/index/logout" onclick="return(confirm('Bạn có muốn thoát không?'))">Thoát</a>
           </div>
@@ -203,13 +206,13 @@ echo $admin->Fullname;
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-             <li class="nav-item">
-                  <a href="/backend/admin/" class="nav-link">
-                     <i class="fa fa-list nav-icon" aria-hidden="true"></i>
-                    <p>Quản Lý Tài Khoản</p>
-                  </a>
-              </li>
-              <li class="nav-item">
+            <li class="nav-item">
+              <a href="/backend/admin/" class="nav-link">
+                <i class="fa fa-list nav-icon" aria-hidden="true"></i>
+                <p>Quản Lý Tài Khoản</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
@@ -248,8 +251,8 @@ echo $admin->Fullname;
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <?php
-include $_Content;
-?>
+      include $_Content;
+      ?>
     </div>
     <!-- /.content-wrapper -->
 

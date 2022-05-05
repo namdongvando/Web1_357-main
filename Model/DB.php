@@ -30,11 +30,9 @@ class DB extends mysqli
     {
         if ($where == null) {
             return;
-        } //" `id` = '10' ";
-        $strSql = implode("`='", $where);
-        $wheresql = "`{$strSql}'";
+        } //" `id` = '10' "; 
+        echo $sql = "DELETE FROM `{$tableName}` WHERE {$where}";
 
-        $sql = "DELETE FROM `{$tableName}` WHERE {$wheresql}";
         return $this->query($sql);
     }
     function QueryPaging($tableName, $where, $pageIndex, $pageNumber, &$totalRows, $colums = null)
@@ -69,15 +67,44 @@ class DB extends mysqli
     {
         return " or {$where} ";
     }
-    public function WhereIn($columname, $listValue)
+    public function WhereInArray($columname, $listValue)
     {
         $strIn = implode("','", $listValue);
         $whereIn = "`{$strIn}'";
-        return " `{$columname}`in ({$whereIn})";
+        return " `{$columname}` in ({$whereIn})";
     }
     public function WhereAnd($where)
     {
         return " and {$where} ";
     }
-
+    public function INSERT($tableName, $data)
+    {
+        $columns =  array_keys($data);
+        $columnsSql = implode("`,`", $columns);
+        $dataSql = implode("','", $columns);
+        $sql = "INSERT INTO `{$tableName}`
+        (`{$columnsSql}`) VALUES ('{$dataSql}')";
+        return $this->query($sql);
+    }
+    public function UPDATE($tableName, $data, $where)
+    {
+        $sqlData = "";
+        foreach ($data as $colums => $dataColums) {
+            $sqlData .= " `{$colums}`='{$dataColums}',";
+        }
+        $sqlData = substr($sqlData, 0, strlen($sqlData) - 1);
+        $sql = "UPDATE `{$tableName}` SET 
+         {$sqlData}
+        WHERE {$where}";
+        return $this->query($sql);
+    }
+    function SELECTROW($tableName, $where)
+    {
+        $sql = "SELECT * FROM `{$tableName}` WHERE {$where}";
+        $result = $this->query($sql);
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+        return null;
+    }
 }

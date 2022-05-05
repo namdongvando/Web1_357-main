@@ -1,17 +1,18 @@
 <?php
 
 use Model\Common;
-use Model\Admin;
+use Model\SanPham;
 
-$dm = new Admin();
+$dm = new SanPham();
 $totalRows = 0;
 // trang hien tai
 $indexPage = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
 // số dòng trên 1 trang
 $pageNumber = isset($_GET["number"]) ? intval($_GET["number"]) : 10;
-$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
 
-$dataAdmin = $dm->GetPaging(["keyword" => $keyword], $indexPage, $pageNumber, $totalRows);
+$dataSanPham = $dm->GetPaging([], $indexPage, $pageNumber, $totalRows);
+
+
 ?>
 
 
@@ -19,7 +20,7 @@ $dataAdmin = $dm->GetPaging(["keyword" => $keyword], $indexPage, $pageNumber, $t
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Danh Sách Tài Khoản</h1>
+                <h1>Danh Mục</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -32,7 +33,7 @@ $dataAdmin = $dm->GetPaging(["keyword" => $keyword], $indexPage, $pageNumber, $t
 </section>
 <!-- Main content -->
 <section class="content">
-    <form action="/backend/admin/index/" method="get">
+    <form action="/backend/SanPham/index/" method="get">
         <div class="input-group mb-3">
             <input type="text" name="keyword" class="form-control" placeholder="từ khoá">
             <div class="input-group-append">
@@ -42,32 +43,31 @@ $dataAdmin = $dm->GetPaging(["keyword" => $keyword], $indexPage, $pageNumber, $t
             </div>
         </div>
     </form>
-    <a href="/backend/admin/post" class="float-right btn btn-primary">Tạo mới</a>
+    <a href="/backend/SanPham/post" class="float-right btn btn-primary">Tạo mới</a>
     <table class="table">
         <thead>
             <tr>
                 <th>Mã </th>
                 <th>Tên</th>
-                <th>Email</th>
-                <th>Điện Thoại</th>
+                <th>Mô Tả</th>
+                <th>Ẩn/Hiện</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            if ($dataAdmin != null) {
-                while ($row = $dataAdmin->fetch_array()) {
-                    $_item = new Admin($row);
+            if ($dataSanPham != null) {
+                while ($row = $dataSanPham->fetch_array()) {
+                    $_item = new SanPham($row);
             ?>
                     <tr>
                         <td scope="row"><?php echo $_item->Id; ?></td>
-                        <td><?php echo $_item->Fullname; ?></td>
-                        <td><?php echo $_item->Email; ?></td>
-                        <td><?php echo $_item->Phone; ?></td>
+                        <td><?php echo $_item->Name; ?></td>
+                        <td><?php echo $_item->Decription; ?></td>
+                        <td><?php echo $_item->IsDelete(); ?></td>
                         <td>
-                            <a onclick="return confirm('Bạn có muốn xóa danh mục này không?')" href="/backend/admin/delete/<?php echo $_item->Id; ?>" class="btn btn-danger">Xóa</a>
-                            <a href="/backend/admin/put/<?php echo $_item->Id; ?>" class="btn btn-primary">Sửa</a>
-                            <a href="/backend/admin/resetpassword/<?php echo $_item->Id; ?>" class="btn btn-primary">Sửa Mật Khẩu</a>
+                            <a onclick="return confirm('Bạn có muốn xóa danh mục này không?')" href="/backend/SanPham/delete/<?php echo $_item->Id; ?>" class="btn btn-danger">Xóa</a>
+                            <a href="/backend/SanPham/put/<?php echo $_item->Id; ?>" class="btn btn-primary">Sửa</a>
                         </td>
                     </tr>
             <?php
@@ -88,7 +88,7 @@ $dataAdmin = $dm->GetPaging(["keyword" => $keyword], $indexPage, $pageNumber, $t
     echo Common::PhanTrang(
         $soTrang,
         $trangHienTai,
-        "/backend/admin/index/?page=[i]&number={$pageNumber}"
+        "/backend/SanPham/index/?page=[i]&number={$pageNumber}"
     );
     ?>
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\backend\Controller;
+
 use App\IController;
 use Model\DanhMuc;
 use PHPMailer\PHPMailer\Exception;
@@ -14,9 +15,10 @@ class danhmucController extends indexController implements IController
     public function index()
     {
         $this->View();
-    // echo "danhmuc>index";
-    } /**
-  */
+        // echo "danhmuc>index";
+    }
+    /**
+     */
 
 
     /**
@@ -53,10 +55,7 @@ class danhmucController extends indexController implements IController
                 $item["IsDelete"] = isset($_POST["IsDelete"]) ? 1 : 0;
                 $dm->Put($item);
             }
-
-        }
-        catch (Exception $ex) {
-
+        } catch (Exception $ex) {
         }
 
         $id = $this->getParams(0);

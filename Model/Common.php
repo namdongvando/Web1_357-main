@@ -5,6 +5,12 @@ namespace Model;
 class Common
 {
 
+    public function ToUrl($path)
+    {
+        header("Location: {$path}");
+        exit();
+    }
+
     public static function PhanTrang($soTrang, $trangHienTai, $link = "[i]")
     {
         ob_start();
@@ -27,7 +33,7 @@ class Common
                 <?php
                 for ($i = 1; $i <= $soTrang; $i++) {
                     $linkPages = str_replace("[i]", $i, $link);
-                    $active = $i==$trangHienTai?"active":"";
+                    $active = $i == $trangHienTai ? "active" : "";
                 ?>
                     <li class="page-item 
                     <?php echo $active ?>">

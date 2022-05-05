@@ -5,6 +5,7 @@ namespace App\backend\Controller;
 use App\IController;
 use Exception;
 use Model\Admin;
+use Model\Common;
 
 class adminController extends indexController implements IController
 {
@@ -52,6 +53,47 @@ class adminController extends indexController implements IController
      */
     function put()
     {
+        $ModelAdmin = new Admin();
+        // sửa khi bấm nút lưu
+        if (isset($_POST["btnLuu"])) {
+            try {
+                $admin = [];
+                $adminPost = $_POST["user"];
+                // lấy thông tin của admin trong database
+                $admin = $ModelAdmin->GetById($adminPost["Id"]);
+                // cập nhật thông tin theo Form
+                $admin["Fullname"] = $adminPost["HoTen"];
+                $admin["Phone"] = $adminPost["SDT"];
+                $admin["Email"] = $adminPost["Email"];
+                $admin["Address"] = $adminPost["DiaChi"];
+                $admin["Province"] = $adminPost["Tinh"];
+                $admin["District"] = $adminPost["Huyen"];
+                $admin["Ward"] = $adminPost["Xa"];
+                $ModelAdmin->Put($admin);
+            } catch (Exception $ex) {
+                echo $ex->getMessage();
+            }
+        }
+
+        // lấy id từ đường dẫn
+        $id = $this->getParams(0);
+        // chuyển id qua View
+        $this->View(["Id" => $id]);
+    }
+    function resetpassword()
+    {
+        $ModelAdmin = new Admin();
+        // sửa khi bấm nút lưu
+        if (isset($_POST["btnLuu"])) {
+            $user = $_POST["user"];
+            $id = $user["Id"];
+            $newPassword = $user["NewPassword"];
+            $ModelAdmin->ResetPassword($id, $newPassword);
+        }
+        // lấy id từ đường dẫn
+        $id = $this->getParams(0);
+        // chuyển id qua View
+        $this->View(["Id" => $id]);
     }
 
     /**
@@ -68,6 +110,10 @@ class adminController extends indexController implements IController
      */
     function delete()
     {
+        $id = $this->getParams(0);
+        $admin = new Admin();
+        $admin->Delete($id);
+        Common::ToUrl("/backend/admin/");
     }
 
     /**
