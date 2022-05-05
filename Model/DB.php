@@ -42,8 +42,15 @@ class DB extends mysqli
             $columsName = implode("`,`", $colums);
             $select = "`{$columsName}`";
         }
-        $sql = "SELECT {$select} FROM `{$tableName}` WHERE {$where} ";
+        $sql = "SELECT {$select} FROM `{$tableName}` WHERE {$where}";
+        if (isset($_GET["debug"])) {
+            echo $sql;
+        }
         $result = $this->query($sql);
+        if ($result == null) {
+            $totalRows = 0;
+            return null;
+        }
         if ($result->num_rows == 0) {
             $totalRows = 0;
             return null;
@@ -106,5 +113,20 @@ class DB extends mysqli
             return $result->fetch_assoc();
         }
         return null;
+    }
+    function SELECTROWS($tableName, $where)
+    {
+        $sql = "SELECT * FROM `{$tableName}` WHERE {$where}";
+        $result = $this->query($sql);
+        if ($result->num_rows > 0) {
+            return $result;
+        }
+        return null;
+    }
+    function DELETEDB($tableName, $where)
+    {
+        $sql = "DELETE FROM `{$tableName}` WHERE {$where}";
+        $result = $this->query($sql);
+        return $result;
     }
 }

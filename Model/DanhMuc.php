@@ -19,6 +19,17 @@ class DanhMuc extends DB implements IModelCRUD
 		parent::__construct();
 	}
 
+	public static function Get2Option()
+	{
+		$dm = new DanhMuc();
+		$dsDM = $dm->Get();
+		$a = [];
+		while ($row = $dsDM->fetch_assoc()) {
+			$a[$row["Id"]] = $row["Name"];
+		}
+		return $a;
+	}
+
 	/**
 	 *
 	 * @param mixed $item
@@ -58,6 +69,7 @@ class DanhMuc extends DB implements IModelCRUD
 	 */
 	function Get()
 	{
+		return $this->SELECTROWS("nn_danhmuc", "1=1");
 	}
 
 	/**
@@ -73,8 +85,7 @@ class DanhMuc extends DB implements IModelCRUD
 		$pageIndex,
 		$pageNumber,
 		&$totalRows
-		)
-	{
+	) {
 		$keyword = isset($params["keyword"])
 			? $params["keyword"] : '';
 		// cau lenh truy van

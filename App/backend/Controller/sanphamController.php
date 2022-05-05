@@ -21,6 +21,7 @@ class sanphamController extends indexController implements IController
      */
     function post()
     {
+        $this->View();
     }
 
     /**s
@@ -29,6 +30,8 @@ class sanphamController extends indexController implements IController
      */
     function put()
     {
+
+        $this->View(["Id" => $this->getParams(0)]);
     }
 
     /**

@@ -1,0 +1,46 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/backend/">Trang Chủ</a></li>
+    <li class="breadcrumb-item"><a href="/backend/danhmuc">Sản Phẩm</a></li>
+    <li class="breadcrumb-item active">Tạo mới</li>
+</ol>
+<section class="content">
+    <div class="card card-primary ">
+        <div class="card-header">
+            <h4 class="card-title">
+                Sửa Sản Phẩm
+            </h4>
+        </div>
+        <form action="" method="post">
+            <div class="card-body">
+                <?php
+
+                use Model\SanPham;
+
+                $sp = new SanPham($data["Id"]);
+
+                use Model\SanPhamForm;
+
+                $formSanPham = new SanPhamForm();
+                $formSanPham->Id($sp->Id)->render();
+                $formSanPham->Code($sp->Code)->renderHtml();
+                $formSanPham->Price($sp->Price)->renderHtml();
+                $formSanPham->SalePrice($sp->SalePrice)->renderHtml();
+                $formSanPham->IdDM($sp->IdDM)->renderHtml();
+                $formSanPham->Keyword($sp->Keyword)->renderHtml();
+                $formSanPham->Decription($sp->Decription)->renderHtml();
+                $formSanPham->Title($sp->Title)->renderHtml();
+                $formSanPham->Content($sp->Content)->renderHtml();
+                $formSanPham->UrlImages($sp->UrlImages)->renderHtml();
+                $formSanPham->Active($sp->Active)->renderHtml();
+
+                ?>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-success">Thêm</button>
+            </div>
+        </form>
+
+    </div>
+
+
+</section>
