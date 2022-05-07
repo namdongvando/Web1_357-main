@@ -3,6 +3,8 @@
 namespace App\backend\Controller;
 
 use App\IController;
+use Model\SanPham;
+use Model\SanPhamForm;
 
 class sanphamController extends indexController implements IController
 {
@@ -21,6 +23,9 @@ class sanphamController extends indexController implements IController
      */
     function post()
     {
+        if (isset($_POST[SanPhamForm::FormName])) {
+        }
+
         $this->View();
     }
 

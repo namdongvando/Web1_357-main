@@ -17,14 +17,36 @@
                 use Model\SanPhamForm;
 
                 $formSanPham = new SanPhamForm();
-                $formSanPham->Id()->render();
-                $formSanPham->Code()->renderHtml();
-                $formSanPham->Price()->renderHtml();
-                $formSanPham->SalePrice()->renderHtml();
-                $formSanPham->IdDM(1)->renderHtml();
-                $formSanPham->Keyword()->renderHtml();
-                $formSanPham->Decription()->renderHtml();
-                $formSanPham->Title()->renderHtml();
+                // $formSanPham->Id()->render();
+                ?>
+                <div class="row">
+                    <div class="col-6">
+                        <?php $formSanPham->Code()->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formSanPham->Name()->renderHtml();  ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->Price()->renderHtml(); ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->SalePrice()->renderHtml();  ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->IdDM(1)->renderHtml(); ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->Keyword()->renderHtml();  ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->Decription()->renderHtml();  ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->Title()->renderHtml(); ?>
+                    </div>
+
+                </div>
+                <?php
                 $formSanPham->Content()->renderHtml();
                 $formSanPham->UrlImages()->renderHtml();
                 $formSanPham->Active()->renderHtml();

@@ -20,6 +20,7 @@ $admin = new Admin($_SESSION["Quantri"]);
   <!-- Theme style -->
   <link rel="stylesheet" href="/public/dist/css/adminlte.min.css">
   <!-- jQuery -->
+  <link rel="stylesheet" href="/public/plugins/summernote/summernote-bs4.min.css" />
   <script src="/public/plugins/jquery/jquery.min.js"></script>
 </head>
 
@@ -275,9 +276,18 @@ $admin = new Admin($_SESSION["Quantri"]);
   <!-- Bootstrap 4 -->
   <script src="/public/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
+  <script src="/public/plugins/summernote/summernote-bs4.min.js"></script>
+
   <script src="/public/dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="/public/dist/js/demo.js"></script>
+  <script>
+    $(function() {
+      $("#content").summernote({
+        height: "400px"
+      });
+    });
+  </script>
 </body>
 
 </html>
