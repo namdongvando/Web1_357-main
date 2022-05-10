@@ -46,6 +46,10 @@ class SanPham extends DB implements IModelCRUD
      *
      * @return mixed
      */
+    public function Content()
+    {
+        return htmlspecialchars_decode($this->Content);
+    }
     public function Price()
     {
         return number_format($this->Price, 0, ".", ",");

@@ -89,7 +89,7 @@ class DB extends mysqli
         $columns =  array_keys($data);
         $columnsSql = implode("`,`", $columns);
         $dataSql = implode("','", $data);
-        echo  $sql = "INSERT INTO `{$tableName}`
+        $sql = "INSERT INTO `{$tableName}`
         (`{$columnsSql}`) VALUES ('{$dataSql}')";
         return $this->query($sql);
     }

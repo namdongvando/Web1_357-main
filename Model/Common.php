@@ -5,7 +5,7 @@ namespace Model;
 class Common
 {
 
-    public function ToUrl($path)
+    public static  function ToUrl($path)
     {
         header("Location: {$path}");
         exit();
