@@ -6,6 +6,7 @@ class Applications
     public static $ActionName;
     public static $Params;
     public static $Layout;
+    public static $Theme;
 
     function __construct()
     {
@@ -14,6 +15,11 @@ class Applications
         $uri = $_SERVER["REQUEST_URI"];
         // phân tích dường dẫn
         $this->InitUri($uri);
+    }
+
+    public function setTheme($themeName)
+    {
+        self::$Theme = $themeName;
     }
     public function setLayout($Layout)
     {
@@ -38,7 +44,7 @@ class Applications
     // phân tích dường dẫn
     public function InitUri($uri)
     {
-        $moduleDefaut = "backend";
+        $moduleDefaut = "frontend";
         $controllerDefaut = "index";
         $actionDefaut = "index";
         // găn mac dịnh cho các thông số 
@@ -107,7 +113,6 @@ class Applications
         array_shift($a);
         array_shift($a);
         self::$Params = $a;
-
     }
 
 
@@ -129,7 +134,10 @@ class Applications
         $_Module = self::$ModuleName;
         $_Controller = self::$ControllerName;
         $_Action = self::$ActionName;
+        $_Theme = self::$Theme;
         $_Content = "App/{$_Module}/Views/{$_Controller}/{$_Action}.phtml";
+        if ($_Theme != null)
+            $_Content = "Theme/{$_Theme}/{$_Module}/{$_Controller}/{$_Action}.phtml";
 
         if (file_exists($_Content) == false) {
             exit("không có file content: {$_Content}");
@@ -138,8 +146,7 @@ class Applications
         $_layout = self::$Layout;
         if ($_layout == null) {
             include $_Content;
-        }
-        else {
+        } else {
             include $_layout;
         }
     }

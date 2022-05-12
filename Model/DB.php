@@ -109,6 +109,8 @@ class DB extends mysqli
     {
         $sql = "SELECT * FROM `{$tableName}` WHERE {$where}";
         $result = $this->query($sql);
+        if ($result == false)
+            return null;
         if ($result->num_rows > 0) {
             return $result->fetch_assoc();
         }
