@@ -169,7 +169,7 @@ class Functions
                 <div class="container">
                     <div class="row">
                         <p class="pull-left">
-                            Copyright © 2013 E-SHOPPER Inc. All rights reserved.
+                            Copyright © __Copyright__. All rights reserved.
                         </p>
                         <p class="pull-right">
                             Designed by
@@ -235,7 +235,8 @@ class Functions
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="index.html"><img src="/public/Eshopper/images/home/logo.png" alt="" /></a>
+                                <a href="index.html">
+                                    <img style="height: 80px;" src="__Logo__" alt="" /></a>
                             </div>
                             <div class="btn-group pull-right">
                                 <div class="btn-group">
