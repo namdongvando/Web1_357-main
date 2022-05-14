@@ -49,6 +49,7 @@ class Setting extends DB implements IModelCRUD
      */
     function Get()
     {
+        return $this->SELECTROWS(self::TableName, "1=1");
     }
 
     /**
