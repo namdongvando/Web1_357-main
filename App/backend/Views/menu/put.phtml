@@ -1,0 +1,47 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/backend/">Trang Chủ</a></li>
+    <li class="breadcrumb-item"><a href="/backend/options">Tùy Chọn</a></li>
+    <li class="breadcrumb-item active">Sửa</li>
+</ol>
+<section class="content">
+    <div class="card card-primary ">
+        <div class="card-header">
+            <h4 class="card-title">
+                Sửa Tùy Chọn
+            </h4>
+        </div>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+                <?php
+
+                use Model\Options;
+                use Model\Options\OptionsForm;
+
+                $st = new Options($data["Id"]);
+
+                $formTable = new OptionsForm();
+                // $formTable->Id()->render();
+                ?>
+                <div class="">
+                    <div class="col-6">
+                        <?php $formTable->Id($st->Id)->render();  ?>
+                        <?php $formTable->Code($st->Code)->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formTable->Name($st->Name)->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formTable->Description($st->Description)->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formTable->GroupName($st->GroupName)->renderHtml();  ?>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-success">Lưu</button>
+            </div>
+        </form>
+    </div>
+
+</section>

@@ -1,0 +1,100 @@
+<?php
+
+use Model\Common;
+use Model\Options;
+
+$options = new Options();
+$totalRows = 0;
+// trang hien tai
+$indexPage = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
+// số dòng trên 1 trang
+$pageNumber = isset($_GET["number"]) ? intval($_GET["number"]) : 10;
+$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
+// echo $keyword;
+$dataOptions = $options->GetPaging(
+    ["keyword" => $keyword],
+    $indexPage,
+    $pageNumber,
+    $totalRows
+);
+
+
+?>
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Cài Đặt</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Cài Đặt</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <form action="/backend/options/index/" method="get">
+        <div class="input-group mb-3">
+            <input type="text" value="<?php echo $keyword; ?>" name="keyword" class="form-control" placeholder="từ khoá">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+    <a href="/backend/options/post" class="float-right btn btn-primary">Tạo mới</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id </th>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if ($dataOptions != null) {
+                while ($row = $dataOptions->fetch_array()) {
+                    $_item = new Options($row);
+            ?>
+                    <tr>
+                        <td scope="row"><?php echo $_item->Id; ?></td>
+                        <td><?php echo $_item->Code; ?></td>
+                        <td><?php echo $_item->Name; ?></td>
+                        <td>
+                            <a onclick="return confirm('Bạn có muốn xóa Cài Đặt này không?')" href="/backend/options/delete/<?php echo $_item->Id; ?>" class="btn btn-danger">Xóa</a>
+                            <a href="/backend/options/put/<?php echo $_item->Id; ?>" class="btn btn-primary">Sửa</a>
+                        </td>
+                    </tr>
+            <?php
+                }
+            }
+            ?>
+
+
+        </tbody>
+    </table>
+
+    <?php
+    $_GET["page"] = isset($_GET["page"]) ? $_GET["page"] : 1;
+    $trangHienTai = intval($_GET["page"]);
+    $trangHienTai = max(1, $trangHienTai);
+    $soTrang = ceil($totalRows / $pageNumber);
+
+    echo Common::PhanTrang(
+        $soTrang,
+        $trangHienTai,
+        "/backend/options/index/?page=[i]&number={$pageNumber}"
+    );
+    ?>
+
+</section>
+<!-- /.content -->
