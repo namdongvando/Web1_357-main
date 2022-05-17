@@ -35,6 +35,7 @@ class Menu extends DB implements IModelCRUD
      */
     function Post($item)
     {
+
         return $this->INSERT(self::TableName, $item);
     }
 
@@ -107,5 +108,16 @@ class Menu extends DB implements IModelCRUD
      */
     function Remove($id)
     {
+    }
+    function SelectMenu2Options($groupsName)
+    {
+        $where = $this->WhereEq("GroupName", $groupsName);
+        return $this->Select2Options(self::TableName, $where, ["Id", "Name"]);
+    }
+    function GetByGroupNameCapCha($groupsName, $capCha)
+    {
+        $where = $this->WhereEq("GroupName", $groupsName);
+        $where .= $this->WhereAnd($this->WhereEq("CapCha", $capCha));
+        return $this->SELECTROWS(self::TableName, $where);
     }
 }

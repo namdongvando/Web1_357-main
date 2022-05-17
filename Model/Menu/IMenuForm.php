@@ -11,5 +11,5 @@ interface IMenuForm
     public function GroupName($val = null);
     public function STT($val = null);
     public function Icon($val = null);
-    public function CapCha($val = null);
+    public function CapCha($groupName, $val = null);
 }

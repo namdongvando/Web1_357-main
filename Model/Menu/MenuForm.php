@@ -3,7 +3,10 @@
 namespace Model\Menu;
 
 use Model\FormRender;
+use Model\Menu;
+use Model\Options;
 use PFBC\Element\Hidden;
+use PFBC\Element\Select;
 use PFBC\Element\Textarea;
 use PFBC\Element\Textbox;
 
@@ -63,8 +66,13 @@ class MenuForm implements IMenuForm
         $lable = "Nhóm";
         $properties["placeholder"] = $lable;
         $properties["value"] = $val;
+        $properties["id"] = "SelectGroupName";
+        $op = new Options();
+        $options = $op->GetByGroupName2Options("MenuGroupName");
+        $options1 = ["" => "Chọn Menu"];
+        $options = $options1 + $options;
 
-        return new FormRender(new Textarea($lable, $name, $properties));
+        return new FormRender(new Select($lable, $name, $options, $properties));
     }
     /**
      *
@@ -123,14 +131,17 @@ class MenuForm implements IMenuForm
      *
      * @return mixed
      */
-    function CapCha($val = null)
+    function CapCha($groupName, $val = null)
     {
         $name = $this->GetName(__FUNCTION__);
         $properties = self::Properties;
         $lable = "Cấp Cha";
         $properties["placeholder"] = $lable;
         $properties["value"] = $val;
-
-        return new FormRender(new Textbox($lable, $name, $properties));
+        $menu  = new Menu();
+        $options = $menu->SelectMenu2Options($groupName);
+        $options1 = ["0" => "Chọn Cấp Cha"];
+        $options = $options1 + $options;
+        return new FormRender(new Select($lable, $name, $options, $properties));
     }
 }

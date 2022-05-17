@@ -1,37 +1,47 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/backend/">Trang Chủ</a></li>
-    <li class="breadcrumb-item"><a href="/backend/options">Tùy Chọn</a></li>
+    <li class="breadcrumb-item"><a href="/backend/menu">Menu</a></li>
     <li class="breadcrumb-item active">Tạo mới</li>
 </ol>
+<!-- /backend/menu/post/MenuTopHeader -->
 <section class="content">
     <div class="card card-primary ">
         <div class="card-header">
             <h4 class="card-title">
-                Thêm Tùy Chọn
+                Thêm Menu
             </h4>
         </div>
+
         <form action="" method="post" enctype="multipart/form-data">
             <div class="card-body">
                 <?php
+                $nameMenu =  $_Params[0] ?? "";
 
-                use Model\Options\OptionsForm;
+                use Model\Menu\MenuForm;
 
-                $formTable = new OptionsForm();
+                $formTable = new MenuForm();
                 // $formTable->Id()->render();
                 ?>
                 <div class="">
                     <div class="col-6">
-                        <?php $formTable->Code()->renderHtml();  ?>
-                    </div>
-                    <div class="col-6">
                         <?php $formTable->Name()->renderHtml();  ?>
                     </div>
                     <div class="col-6">
-                        <?php $formTable->Description()->renderHtml();  ?>
+                        <?php $formTable->Link()->renderHtml();  ?>
                     </div>
                     <div class="col-6">
-                        <?php $formTable->GroupName()->renderHtml();  ?>
+                        <?php $formTable->STT()->renderHtml();  ?>
                     </div>
+                    <div class="col-6">
+                        <?php $formTable->Icon()->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formTable->GroupName($nameMenu)->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formTable->CapCha($nameMenu)->renderHtml();  ?>
+                    </div>
+
                 </div>
             </div>
             <div class="card-footer">
@@ -41,3 +51,11 @@
     </div>
 
 </section>
+<script>
+    $(function() {
+        $("#SelectGroupName").change(function() {
+            //alert($(this).val());
+            window.location.href = `/backend/menu/post/${$(this).val()}`;
+        });
+    });
+</script>

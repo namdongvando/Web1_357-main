@@ -53,6 +53,7 @@ class optionsController extends indexController implements IController
             $stDB["Name"] = $postData["Name"];
             $stDB["Code"] = $postData["Code"];
             $stDB["Description"] = $postData["Description"];
+            $stDB["GroupName"] = $postData["GroupName"];
             $st->Put($stDB);
             Common::ToUrl("/backend/options");
         }

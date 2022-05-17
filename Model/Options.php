@@ -106,4 +106,15 @@ class Options extends DB implements IModelCRUD
     function Remove($id)
     {
     }
+    // lấy danh sách tùy chọn theo tên nhóm
+    function GetByGroupName($groupName)
+    {
+        $where = $this->WhereEq("GroupName", $groupName);
+        return $this->SELECTROWS(self::TableName, $where);
+    }
+    function GetByGroupName2Options($groupName)
+    {
+        $where = $this->WhereEq("GroupName", $groupName);
+        return $this->Select2Options(self::TableName, $where, ["Code", "Name"]);
+    }
 }

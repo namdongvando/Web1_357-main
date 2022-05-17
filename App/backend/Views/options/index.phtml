@@ -56,6 +56,7 @@ $dataOptions = $options->GetPaging(
                 <th>Id </th>
                 <th>Code</th>
                 <th>Name</th>
+                <th>GroupName</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -69,6 +70,7 @@ $dataOptions = $options->GetPaging(
                         <td scope="row"><?php echo $_item->Id; ?></td>
                         <td><?php echo $_item->Code; ?></td>
                         <td><?php echo $_item->Name; ?></td>
+                        <td><?php echo $_item->GroupName; ?></td>
                         <td>
                             <a onclick="return confirm('Bạn có muốn xóa Cài Đặt này không?')" href="/backend/options/delete/<?php echo $_item->Id; ?>" class="btn btn-danger">Xóa</a>
                             <a href="/backend/options/put/<?php echo $_item->Id; ?>" class="btn btn-primary">Sửa</a>

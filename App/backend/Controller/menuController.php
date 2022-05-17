@@ -31,6 +31,7 @@ class menuController extends indexController implements IController
         if (isset($_POST[MenuForm::FormName])) {
             $postData = $_POST[MenuForm::FormName];
             $st = new Menu();
+            $postData["CapCha"] = intval($postData["CapCha"]);
             $st->Post($postData);
             Common::ToUrl("/backend/menu");
         }
@@ -50,11 +51,11 @@ class menuController extends indexController implements IController
             // láy từ database
             $st = new Menu();
             $stDB = $st->GetById($postData["Id"]);
-            $stDB["Name"] = $postData["Name"];
-            $stDB["Code"] = $postData["Code"];
-            $stDB["Description"] = $postData["Description"];
+            $postData["CapCha"] = intval($postData["CapCha"]);
+            foreach ($postData as $key => $value) {
+                $stDB[$key] = $value;
+            }
             $st->Put($stDB);
-            Common::ToUrl("/backend/menu");
         }
         $this->View(["Id" => $this->getParams(0)]);
     }

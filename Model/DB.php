@@ -131,4 +131,17 @@ class DB extends mysqli
         $result = $this->query($sql);
         return $result;
     }
+    // lấy du liệu và chuyển qua dang [[Key=>value],[Key=>value]]
+    function Select2Options($tableName, $where, $colName)
+    {
+        $result =  $this->SELECTROWS($tableName, $where);
+        if ($result == null) {
+            return [];
+        }
+        $op = [];
+        while ($row = $result->fetch_assoc()) {
+            $op[$row[$colName[0]]] =  $row[$colName[1]];
+        }
+        return $op;
+    }
 }

@@ -135,6 +135,7 @@ class Applications
         $_Controller = self::$ControllerName;
         $_Action = self::$ActionName;
         $_Theme = self::$Theme;
+        $_Params = self::$Params;
         $_Content = "App/{$_Module}/Views/{$_Controller}/{$_Action}.phtml";
         if ($_Theme != null)
             $_Content = "Theme/{$_Theme}/{$_Module}/{$_Controller}/{$_Action}.phtml";
