@@ -3,6 +3,7 @@
 namespace Theme\Eshopper;
 
 use Model\Menu;
+use Model\Options;
 use Model\Setting;
 
 class Functions
@@ -103,11 +104,21 @@ class Functions
                             <div class="single-widget">
                                 <h2>Service</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#">Online Help</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                    <li><a href="#">Order Status</a></li>
-                                    <li><a href="#">Change Location</a></li>
-                                    <li><a href="#">FAQ’s</a></li>
+                                    <?php
+                                    $menu = new Menu();
+                                    $MenuItem = $menu->GetByGroupNameCapCha("FooterMenu", 0);
+                                    if ($MenuItem)
+                                        while ($row = $MenuItem->fetch_assoc()) {
+                                            $_item = new Menu($row);
+                                    ?>
+                                        <li>
+                                            <a href="<?php echo $_item->Link; ?>">
+                                                <?php echo $_item->Name; ?>
+                                            </a>
+                                        </li>
+                                    <?php
+                                        }
+                                    ?>
                                 </ul>
                             </div>
                         </div>
@@ -115,11 +126,21 @@ class Functions
                             <div class="single-widget">
                                 <h2>Quock Shop</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#">T-Shirt</a></li>
-                                    <li><a href="#">Mens</a></li>
-                                    <li><a href="#">Womens</a></li>
-                                    <li><a href="#">Gift Cards</a></li>
-                                    <li><a href="#">Shoes</a></li>
+                                    <?php
+                                    $menu = new Menu();
+                                    $MenuItem = $menu->GetByGroupNameCapCha("FooterMenu1", 0);
+                                    if ($MenuItem)
+                                        while ($row = $MenuItem->fetch_assoc()) {
+                                            $_item = new Menu($row);
+                                    ?>
+                                        <li>
+                                            <a href="<?php echo $_item->Link; ?>">
+                                                <?php echo $_item->Name; ?>
+                                            </a>
+                                        </li>
+                                    <?php
+                                        }
+                                    ?>
                                 </ul>
                             </div>
                         </div>
@@ -127,11 +148,21 @@ class Functions
                             <div class="single-widget">
                                 <h2>Policies</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#">Terms of Use</a></li>
-                                    <li><a href="#">Privecy Policy</a></li>
-                                    <li><a href="#">Refund Policy</a></li>
-                                    <li><a href="#">Billing System</a></li>
-                                    <li><a href="#">Ticket System</a></li>
+                                    <?php
+                                    $menu = new Menu();
+                                    $MenuItem = $menu->GetByGroupNameCapCha("FooterMenu2", 0);
+                                    if ($MenuItem)
+                                        while ($row = $MenuItem->fetch_assoc()) {
+                                            $_item = new Menu($row);
+                                    ?>
+                                        <li>
+                                            <a href="<?php echo $_item->Link; ?>">
+                                                <?php echo $_item->Name; ?>
+                                            </a>
+                                        </li>
+                                    <?php
+                                        }
+                                    ?>
                                 </ul>
                             </div>
                         </div>
@@ -139,11 +170,21 @@ class Functions
                             <div class="single-widget">
                                 <h2>About Shopper</h2>
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#">Company Information</a></li>
-                                    <li><a href="#">Careers</a></li>
-                                    <li><a href="#">Store Location</a></li>
-                                    <li><a href="#">Affillate Program</a></li>
-                                    <li><a href="#">Copyright</a></li>
+                                    <?php
+                                    $menu = new Menu();
+                                    $MenuItem = $menu->GetByGroupNameCapCha("FooterMenu3", 0);
+                                    if ($MenuItem)
+                                        while ($row = $MenuItem->fetch_assoc()) {
+                                            $_item = new Menu($row);
+                                    ?>
+                                        <li>
+                                            <a href="<?php echo $_item->Link; ?>">
+                                                <?php echo $_item->Name; ?>
+                                            </a>
+                                        </li>
+                                    <?php
+                                        }
+                                    ?>
                                 </ul>
                             </div>
                         </div>
@@ -568,10 +609,23 @@ class Functions
                 <h2>Brands</h2>
                 <div class="brands-name">
                     <ul class="nav nav-pills nav-stacked">
-                        <li>
-                            <a href="#"> <span class="pull-right">(50)</span>Acne</a>
-                        </li>
-                        <li>
+                        <?php
+                        $modelOptions = new Options();
+                        $options = $modelOptions->GetByGroupName("ThuongHieu");
+                        while ($row = $options->fetch_assoc()) {
+                            $_item = new Options($row);
+                        ?>
+                            <li>
+                                <a href="#"> <span class="pull-right">(50)</span>
+                                    <?php echo  $_item->Name ?>
+                                </a>
+                            </li>
+                        <?php
+                        }
+                        ?>
+
+
+                        <!-- <li>
                             <a href="#">
                                 <span class="pull-right">(56)</span>Grüne Erde</a>
                         </li>
@@ -595,7 +649,7 @@ class Functions
                             <a href="#">
                                 <span class="pull-right">(4)</span>Rösch creative
                                 culture</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>

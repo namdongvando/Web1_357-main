@@ -1,0 +1,44 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/backend/">Trang Chủ</a></li>
+    <li class="breadcrumb-item"><a href="/backend/setting">Tùy Chọn</a></li>
+    <li class="breadcrumb-item active">Sửa</li>
+</ol>
+<section class="content">
+    <div class="card card-primary ">
+        <div class="card-header">
+            <h4 class="card-title">
+                Sửa Tùy Chọn
+            </h4>
+        </div>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+                <?php
+
+                use Model\Setting;
+                use Model\Setting\SettingForm;
+
+                $st = new Setting($data["Id"]);
+
+                $formTable = new SettingForm();
+                // $formTable->Id()->render();
+                ?>
+                <div class="">
+                    <div class="col-6">
+                        <?php $formTable->Id($st->Id)->render();  ?>
+                        <?php $formTable->Code($st->Code)->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formTable->Name($st->Name)->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formTable->Description($st->Description)->renderHtml();  ?>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-success">Lưu</button>
+            </div>
+        </form>
+    </div>
+
+</section>

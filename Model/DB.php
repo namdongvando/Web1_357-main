@@ -144,4 +144,10 @@ class DB extends mysqli
         }
         return $op;
     }
+
+    function OrderBy($columName)
+    {
+        $columnsSql = implode("`,`", $columName);
+        return " ORDER BY `{$columnsSql}`";
+    }
 }

@@ -2,16 +2,16 @@
 
 namespace Model;
 
-class Menu extends DB implements IModelCRUD
+class Banner extends DB implements IModelCRUD
 {
-    const TableName = "nn_menu";
+    const TableName = "nn_banner";
     public $Id;
     public $Name;
-    public $Link;
-    public $GroupName;
     public $STT;
-    public $Icon;
-    public $CapCha;
+    public $UrlImages;
+    public $Link;
+    public $GroupsName;
+    public $Description;
     function __construct($item = null)
     {
         parent::__construct();
@@ -21,11 +21,11 @@ class Menu extends DB implements IModelCRUD
         }
         $this->Id = $item["Id"] ?? null;
         $this->Name = $item["Name"] ?? null;
-        $this->Link = $item["Link"] ?? null;
-        $this->GroupName = $item["GroupName"] ?? null;
         $this->STT = $item["STT"] ?? null;
-        $this->Icon = $item["Icon"] ?? null;
-        $this->CapCha = $item["CapCha"] ?? null;
+        $this->UrlImages = $item["UrlImages"] ?? null;
+        $this->Link = $item["Link"] ?? null;
+        $this->GroupsName = $item["GroupsName"] ?? null;
+        $this->Description = $item["Description"] ?? null;
     }
     /**
      *
@@ -35,7 +35,6 @@ class Menu extends DB implements IModelCRUD
      */
     function Post($item)
     {
-
         return $this->INSERT(self::TableName, $item);
     }
 
@@ -72,6 +71,13 @@ class Menu extends DB implements IModelCRUD
             $this->WhereEq("Id", $id)
         );
     }
+    function GetByGroupName($groupName)
+    {
+        return $this->SELECTROW(
+            self::TableName,
+            $this->WhereEq("GroupName", $groupName)
+        );
+    }
 
     /**
      *
@@ -86,6 +92,8 @@ class Menu extends DB implements IModelCRUD
     {
         $keyword = $params["keyword"] ?? "";
         $where = $this->WhereLike("Name", $keyword);
+        $where .= $this->WhereOr($this->WhereLike("Description", $keyword));
+        $where .= $this->WhereOr($this->WhereLike("Code", $keyword));
         return $this->QueryPaging(self::TableName,  $where, $pageIndex, $pageNumber, $totalRows);
     }
 
@@ -108,17 +116,5 @@ class Menu extends DB implements IModelCRUD
      */
     function Remove($id)
     {
-    }
-    function SelectMenu2Options($groupsName)
-    {
-        $where = $this->WhereEq("GroupName", $groupsName);
-        return $this->Select2Options(self::TableName, $where, ["Id", "Name"]);
-    }
-    function GetByGroupNameCapCha($groupsName, $capCha)
-    {
-        $where = $this->WhereEq("GroupName", $groupsName);
-        $where .= $this->WhereAnd($this->WhereEq("CapCha", $capCha));
-        $where .= $this->OrderBy(["STT"]);
-        return $this->SELECTROWS(self::TableName, $where);
     }
 }
