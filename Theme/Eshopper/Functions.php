@@ -304,19 +304,43 @@ class Functions
                             </div>
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
-                                    <li><a href="index.html" class="active">Home</a></li>
-                                    <li class="dropdown">
-                                        <a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                        <ul role="menu" class="sub-menu">
-                                            <li><a href="shop.html">Products</a></li>
-                                            <li>
-                                                <a href="product-details.html">Product Details</a>
-                                            </li>
-                                            <li><a href="checkout.html">Checkout</a></li>
-                                            <li><a href="cart.html">Cart</a></li>
-                                            <li><a href="login.html">Login</a></li>
-                                        </ul>
-                                    </li>
+                                    <?php
+                                    $MenuItem = $menu->GetByGroupNameCapCha("MainMenu", 0);
+                                    if ($MenuItem) {
+                                        while ($row = $MenuItem->fetch_assoc()) {
+                                            $_item = new Menu($row);
+                                            // lấy danh sách menu cấp 2
+                                            $MenuItem2 = $menu->GetByGroupNameCapCha("MainMenu", $_item->Id);
+                                            // có cấp 2
+                                            if ($MenuItem2) {
+                                    ?>
+                                                <li class="dropdown">
+                                                    <a href="#"><?php echo  $_item->Name ?><i class="fa fa-angle-down"></i></a>
+                                                    <ul role="menu" class="sub-menu">
+                                                        <?php
+                                                        while ($row1 = $MenuItem2->fetch_assoc()) {
+                                                            $_item1 = new Menu($row1);
+                                                        ?>
+                                                            <li><a href="<?php echo  $_item1->Link ?>"><?php echo  $_item1->Name ?></a></li>
+                                                        <?php
+                                                        }
+                                                        ?>
+
+                                                    </ul>
+                                                </li>
+
+                                            <?php
+                                            } else {
+                                                // không có cấp 2
+                                            ?>
+                                                <li><a href="<?php echo  $_item->Link; ?>"><?php echo  $_item->Name; ?></a></li>
+                                    <?php
+                                            }
+                                        }
+                                    }
+
+                                    ?>
+
 
                                 </ul>
                             </div>
