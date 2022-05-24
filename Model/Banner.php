@@ -35,6 +35,7 @@ class Banner extends DB implements IModelCRUD
      */
     function Post($item)
     {
+        // DB::$debug = true;
         return $this->INSERT(self::TableName, $item);
     }
 
@@ -73,9 +74,9 @@ class Banner extends DB implements IModelCRUD
     }
     function GetByGroupName($groupName)
     {
-        return $this->SELECTROW(
+        return $this->SELECTROWS(
             self::TableName,
-            $this->WhereEq("GroupName", $groupName)
+            $this->WhereEq("GroupsName", $groupName)
         );
     }
 
@@ -93,7 +94,8 @@ class Banner extends DB implements IModelCRUD
         $keyword = $params["keyword"] ?? "";
         $where = $this->WhereLike("Name", $keyword);
         $where .= $this->WhereOr($this->WhereLike("Description", $keyword));
-        $where .= $this->WhereOr($this->WhereLike("Code", $keyword));
+        // $where .= $this->WhereOr($this->WhereLike("Code", $keyword));
+        // DB::$debug = true; 
         return $this->QueryPaging(self::TableName,  $where, $pageIndex, $pageNumber, $totalRows);
     }
 

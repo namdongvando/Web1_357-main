@@ -10,6 +10,6 @@ interface IBannerForm
     public function Link($val = null);
     public function UrlImages($val = null);
     public function Description($val = null);
-    public function GroupName($val = null);
+    public function GroupsName($val = null);
     public function STT($val = null);
 }

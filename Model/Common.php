@@ -10,6 +10,16 @@ class Common
         header("Location: {$path}");
         exit();
     }
+    public static  function UploadFile($file, $path)
+    {
+        $fromPath = $file["tmp_name"]["UrlImages"];
+        $toPath = $path . $file["name"]["UrlImages"];
+        if (is_dir($path) == false) {
+            mkdir($path, 0777);
+        }
+        move_uploaded_file($fromPath, $toPath);
+        return "/" . $toPath;
+    }
 
     public static function PhanTrang($soTrang, $trangHienTai, $link = "[i]")
     {

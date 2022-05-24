@@ -1,42 +1,51 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/backend/">Trang Chủ</a></li>
-    <li class="breadcrumb-item"><a href="/backend/setting">Tùy Chọn</a></li>
+    <li class="breadcrumb-item"><a href="/backend/banner">Banner</a></li>
     <li class="breadcrumb-item active">Sửa</li>
 </ol>
 <section class="content">
     <div class="card card-primary ">
         <div class="card-header">
             <h4 class="card-title">
-                Sửa Tùy Chọn
+                Sửa Banner
             </h4>
         </div>
         <form action="" method="post" enctype="multipart/form-data">
             <div class="card-body">
                 <?php
 
-                use Model\Setting;
-                use Model\Setting\SettingForm;
+                use Model\Banner;
+                use Model\Banner\BannerForm;
 
-                $st = new Setting($data["Id"]);
-
-                $formTable = new SettingForm();
+                $formTable = new BannerForm();
+                $_banner = new Banner($_Params[0]);
                 // $formTable->Id()->render();
                 ?>
                 <div class="">
                     <div class="col-6">
-                        <?php $formTable->Id($st->Id)->render();  ?>
-                        <?php $formTable->Code($st->Code)->renderHtml();  ?>
+                        <?php $formTable->Id($_banner->Id)->render();  ?>
+                        <?php $formTable->Name($_banner->Name)->renderHtml();  ?>
                     </div>
                     <div class="col-6">
-                        <?php $formTable->Name($st->Name)->renderHtml();  ?>
+                        <img src="<?php echo $_banner->UrlImages; ?>" style="height:100px;" alt="">
+                        <?php $formTable->UrlImages($_banner->UrlImages)->renderHtml();  ?>
                     </div>
                     <div class="col-6">
-                        <?php $formTable->Description($st->Description)->renderHtml();  ?>
+                        <?php $formTable->STT($_banner->STT)->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formTable->Link($_banner->Link)->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formTable->GroupsName($_banner->GroupsName)->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formTable->Description($_banner->Description)->renderHtml();  ?>
                     </div>
                 </div>
             </div>
             <div class="card-footer">
-                <button class="btn btn-success">Lưu</button>
+                <button class="btn btn-success">Sửa</button>
             </div>
         </form>
     </div>

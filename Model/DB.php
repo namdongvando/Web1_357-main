@@ -6,6 +6,7 @@ use mysqli;
 
 class DB extends mysqli
 {
+    public static $debug = false;
 
     function __construct()
     {
@@ -46,6 +47,9 @@ class DB extends mysqli
         if (isset($_GET["debug"])) {
             echo $sql;
         }
+        if (self::$debug == true) {
+            echo $sql;
+        }
         $result = $this->query($sql);
         if ($result == null) {
             $totalRows = 0;
@@ -59,6 +63,7 @@ class DB extends mysqli
         $totalRows = $result->num_rows;
         $start = ($pageIndex - 1) * $pageNumber;
         $sql = $sql . " limit {$start},{$pageNumber}";
+
         return $this->query($sql);
     }
 
@@ -91,6 +96,9 @@ class DB extends mysqli
         $dataSql = implode("','", $data);
         $sql = "INSERT INTO `{$tableName}`
         (`{$columnsSql}`) VALUES ('{$dataSql}')";
+        if (self::$debug == true) {
+            echo $sql;
+        }
         return $this->query($sql);
     }
     public function UPDATE($tableName, $data, $where)
@@ -103,6 +111,9 @@ class DB extends mysqli
         $sql = "UPDATE `{$tableName}` SET 
          {$sqlData}
         WHERE {$where}";
+        if (self::$debug == true) {
+            echo $sql;
+        }
         return $this->query($sql);
     }
     function SELECTROW($tableName, $where)

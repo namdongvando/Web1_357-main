@@ -60,7 +60,7 @@ class BannerForm implements IBannerForm
 
     /**
      */
-    function GroupName($val = null)
+    function GroupsName($val = null)
     {
         $name = $this->GetName(__FUNCTION__);
         $properties = self::Properties;
@@ -142,6 +142,6 @@ class BannerForm implements IBannerForm
         $properties["value"] = $val;
         $properties["id"] = "content";
 
-        return new FormRender(new Textbox($lable, $name, $properties));
+        return new FormRender(new Textarea($lable, $name, $properties));
     }
 }
