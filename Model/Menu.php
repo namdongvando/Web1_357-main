@@ -116,6 +116,7 @@ class Menu extends DB implements IModelCRUD
     }
     function GetByGroupNameCapCha($groupsName, $capCha)
     {
+
         $where = $this->WhereEq("GroupName", $groupsName);
         $where .= $this->WhereAnd($this->WhereEq("CapCha", $capCha));
         $where .= $this->OrderBy(["STT"]);

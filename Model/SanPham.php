@@ -4,6 +4,7 @@ namespace Model;
 
 class SanPham extends DB implements IModelCRUD
 {
+    const tableName = "nn_sanpham";
     public $Id;
     public $Code;
     public $IdDM;
@@ -134,5 +135,21 @@ class SanPham extends DB implements IModelCRUD
      */
     function Remove($id)
     {
+    }
+    // lay ra san pham noi bat
+    public function GetFeaturesItems($number = 10)
+    {
+        // DB::$debug = true;
+        $where = " 1=1 ";
+        $where .= $this->OrderBy(["Id"], true);
+        $where .= $this->Limit(0, $number);
+        return $this->SELECTROWS(self::tableName, $where);
+    }
+    function GetSanPhamTheoDanhMuc($idDm, $number = 10)
+    {
+        $where = $this->WhereEq("IdDM", $idDm);
+        $where .= $this->OrderBy(["Id"], true);
+        $where .= $this->Limit(0, $number);
+        return $this->SELECTROWS(self::tableName, $where);
     }
 }

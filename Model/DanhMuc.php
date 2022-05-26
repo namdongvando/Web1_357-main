@@ -147,4 +147,11 @@ class DanhMuc extends DB implements IModelCRUD
 		$a = ["Hiện", "Ẩn"];
 		return $a[$this->IsDelete];
 	}
+
+	// lấy sản phẩm theo danh mục hiện tại
+	public function GetSanPhams($number)
+	{
+		$sanpham = new SanPham();
+		return $sanpham->GetSanPhamTheoDanhMuc($this->Id, $number);
+	}
 }

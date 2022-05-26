@@ -130,6 +130,9 @@ class DB extends mysqli
     function SELECTROWS($tableName, $where)
     {
         $sql = "SELECT * FROM `{$tableName}` WHERE {$where}";
+        if (self::$debug == true) {
+            echo $sql;
+        }
         $result = $this->query($sql);
         if ($result->num_rows > 0) {
             return $result;
@@ -156,9 +159,20 @@ class DB extends mysqli
         return $op;
     }
 
-    function OrderBy($columName)
+    function OrderBy($columName, $isDesc = false)
     {
+        $Desc = "ASC";
+        if ($isDesc == true) {
+            $Desc = "DESC";
+        }
         $columnsSql = implode("`,`", $columName);
-        return " ORDER BY `{$columnsSql}`";
+        return " ORDER BY `{$columnsSql}` {$Desc}";
+    }
+
+    public function Limit($start = 0, $number = 10)
+    {
+        $start = max(0, $start);
+        $number = max(1, $number);
+        return " Limit {$start},{$number}";
     }
 }
