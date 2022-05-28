@@ -1,6 +1,7 @@
 <?php
 
 use Model\DanhMuc;
+use Model\GioHang;
 use Model\SanPham;
 
 $sanPham = new SanPham();
@@ -22,7 +23,7 @@ $danhSachSanPham = $sanPham->GetFeaturesItems(12);
                             <img onerror="this.src='/public/no-image.jpg'" src="<?php echo $_item->UrlImages; ?>" alt="<?php echo $_item->Name; ?>" />
                             <h2><?php echo $_item->Price(); ?></h2>
                             <p><?php echo $_item->Name; ?></p>
-                            <a href="#" class="btn btn-default add-to-cart">
+                            <a href="<?php echo GioHang::linkThemGioHang($_item->Id); ?>" class="btn btn-default add-to-cart">
                                 <i class="fa fa-shopping-cart"></i>
                                 Thêm vào giỏ hàng
                             </a>
@@ -31,7 +32,7 @@ $danhSachSanPham = $sanPham->GetFeaturesItems(12);
                             <div class="overlay-content">
                                 <h2><?php echo $_item->Price(); ?></h2>
                                 <p><?php echo $_item->Name; ?></p>
-                                <a href="#" class="btn btn-default add-to-cart">
+                                <a href="<?php echo GioHang::linkThemGioHang($_item->Id); ?>" class="btn btn-default add-to-cart">
                                     <i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                             </div>
                         </div>
@@ -107,7 +108,9 @@ $danhSachSanPham = $sanPham->GetFeaturesItems(12);
                                             <img onerror="this.src='/public/no-image.jpg'" src="<?php echo $_item1->UrlImages; ?>" alt="<?php echo $_item1->Name; ?>" />
                                             <h2><?php echo $_item1->Price(); ?></h2>
                                             <p><?php echo $_item1->Name; ?></p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm giỏ hàng</a>
+                                            <a href="<?php echo GioHang::linkThemGioHang($_item1->Id); ?>" class="btn btn-default add-to-cart">
+                                                <i class="fa fa-shopping-cart"></i>Thêm giỏ hàng
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

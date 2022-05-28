@@ -1,4 +1,7 @@
 <?php
+
+use Model\Common;
+
 session_start();
 ob_start();
 include "./vendor/autoload.php";
@@ -6,6 +9,8 @@ spl_autoload_register(function ($className) {
     //echo  "____" . $className . "____";
     include_once(__DIR__ . "/{$className}.php");
 });
+// set loại tiền tệ
+Common::$TypeMoney = $_SESSION["TypeMoney"] ?? Common::MoneyVND;
 //  tat ca request phai chay qua file này
 // trừ public
 // include("App\backend\Controller\BaseController.php");

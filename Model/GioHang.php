@@ -8,6 +8,18 @@ class GioHang
     public function __construct()
     {
     }
+    public function ThemSoLuong($idSanPham, $sl)
+    {
+        $_SESSION[self::TenGioHang][$idSanPham]["number"] += $sl;
+        return;
+    }
+    public function GiamSoLuong($idSanPham, $sl)
+    {
+        $_SESSION[self::TenGioHang][$idSanPham]["number"] -= $sl;
+        $slsp = $_SESSION[self::TenGioHang][$idSanPham]["number"];
+        $_SESSION[self::TenGioHang][$idSanPham]["number"] =
+            max(1, $_SESSION[self::TenGioHang][$idSanPham]["number"]);
+    }
     public static function DanhSachSanPham()
     {
         return $_SESSION[self::TenGioHang];
@@ -26,11 +38,32 @@ class GioHang
     }
     public function SuaGioHang($idSanPham, $number)
     {
+        // sửa số lượng của sản phẩm trong giỏ hàng
+        $_SESSION[self::TenGioHang][$idSanPham]["number"] = $number;
     }
     public function XoaGioHang($idSanPham)
     {
+        // bỏ sản phẩm theo mã
+        unset($_SESSION[self::TenGioHang][$idSanPham]);
     }
     public function XoaTatCaGioHang()
     {
+        $_SESSION[self::TenGioHang] = [];
+    }
+    public static function linkThemGioHang($maSanPham)
+    {
+        return "/cart/index/add/{$maSanPham}";
+    }
+    public static function LinkThemSoLuong($maSanPham)
+    {
+        return "/cart/index/plus/{$maSanPham}";
+    }
+    public static function LinkGiamSoLuong($maSanPham)
+    {
+        return "/cart/index/minu/{$maSanPham}";
+    }
+    public static function LinkXoaSanPham($maSanPham)
+    {
+        return "/cart/index/remove/{$maSanPham}";
     }
 }

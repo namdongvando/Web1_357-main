@@ -17,6 +17,7 @@ class SanPham extends DB implements IModelCRUD
     public $UrlImages;
     public $SalePrice;
     public $Active;
+    public $number;
     /**
      */
 
@@ -40,6 +41,15 @@ class SanPham extends DB implements IModelCRUD
         $this->UrlImages = isset($sp["UrlImages"]) ? $sp["UrlImages"] : null;
         $this->SalePrice = isset($sp["SalePrice"]) ? $sp["SalePrice"] : null;
         $this->Active = isset($sp["Active"]) ? $sp["Active"] : null;
+        $this->number = $sp["number"] ?? 0;
+    }
+    public function ThanhTien()
+    {
+        return $this->Price * $this->number;
+    }
+    public function ThanhTienView()
+    {
+        return Common::ViewMoney($this->Price * $this->number);
     }
     /**
      *
@@ -53,7 +63,7 @@ class SanPham extends DB implements IModelCRUD
     }
     public function Price()
     {
-        return number_format($this->Price, 0, ".", ",");
+        return Common::ViewMoney($this->Price);
     }
     function Post($item)
     {

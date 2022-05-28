@@ -4,7 +4,19 @@ namespace Model;
 
 class Common
 {
+    const MoneyVND = "vnd";
+    const MoneyDola = "dola";
+    public static $TypeMoney = "vnd";
 
+    public static function ViewMoney($number)
+    {
+        if (self::$TypeMoney == self::MoneyVND)
+            return number_format($number, 0, ".", ",") . "vnđ";
+        if (self::$TypeMoney == self::MoneyDola)
+            return "$" . number_format($number, 0, ".", ',');
+        // không định nghĩa thì dùng tiền VND
+        return number_format($number, ".", ',') . "vnđ";
+    }
     public static  function ToUrl($path)
     {
         header("Location: {$path}");
