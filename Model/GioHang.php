@@ -50,6 +50,34 @@ class GioHang
     {
         $_SESSION[self::TenGioHang] = [];
     }
+    public static function TongTien()
+    {
+        $GioHang = new GioHang();
+        $dsSanPham = $GioHang->DanhSachSanPham();
+        $tong = 0;
+        foreach ($dsSanPham as $idSP => $SanPham) {
+            $_sp = new SanPham($SanPham);
+            $thanhTien = $_sp->ThanhTien();
+            $tong += $thanhTien;
+        }
+        return $tong;
+    }
+    public static function Thue()
+    {
+        $tongTien =  self::TongTien();
+        return $tongTien * 0.1;
+    }
+    public static function PhiGiaoHang()
+    {
+        return 0;
+    }
+    public static function TamTinh()
+    {
+        $tongTien = self::TongTien();
+        $Thue = self::Thue();
+        $phiGiaoHang = self::PhiGiaoHang();
+        return $tongTien + $Thue + $phiGiaoHang;
+    }
     public static function linkThemGioHang($maSanPham)
     {
         return "/cart/index/add/{$maSanPham}";

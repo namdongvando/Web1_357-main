@@ -1,0 +1,157 @@
+<section id="cart_items">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="#">Trang Chủ</a></li>
+                <li class="active">Đặt Hàng</li>
+            </ol>
+        </div>
+
+        <div class="step-one">
+            <h2 class="heading">Bước 1</h2>
+        </div>
+        <div class="checkout-options">
+            <h3>Thành viên mới</h3>
+            <p>Tùy chọn đặt hàng</p>
+            <ul class="nav">
+                <li>
+                    <label><input type="checkbox"> đăng ký tài khoản</label>
+                </li>
+                <li>
+                    <label><input type="checkbox"> khách vãnh lai</label>
+                </li>
+                <li>
+                    <a href=""><i class="fa fa-times"></i>thoát</a>
+                </li>
+            </ul>
+        </div>
+        <!--/checkout-options-->
+
+        <div class="register-req">
+            <p>Vui lòng sử dụng Đăng ký và Kiểm tra để dễ dàng truy cập vào lịch sử đơn đặt hàng của bạn hoặc sử dụng Checkout với tư cách Khách</p>
+        </div>
+        <!--/register-req-->
+
+        <div class="shopper-informations">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="shopper-info">
+                        <p>Thông tin người mua hàng</p>
+                        <form>
+                            <input type="text" placeholder="Display Name">
+                            <input type="text" placeholder="User Name">
+                            <input type="text" placeholder="Email*">
+                            <input type="password" placeholder="Password">
+                            <input type="password" placeholder="Confirm password">
+                        </form>
+                        <a class="btn btn-primary" href="">Get Quotes</a>
+                        <a class="btn btn-primary" href="">Continue</a>
+                    </div>
+                </div>
+                <div class="col-sm-5 clearfix">
+                    <div class="bill-to">
+                        <p>Thông Tin giao hàng</p>
+                        <div class="form-one" style="width: auto;">
+                            <form>
+                                <input type="text" placeholder="Tên người nhận *">
+                                <input type="text" placeholder="SĐT *">
+                                <label for="tinhthanh">
+                                    tỉnh thành
+                                </label>
+                                <select name="TinhThanh"></select>
+                                <label for="tinhthanh">
+                                    Quận huyện
+                                </label>
+                                <select name="quanHuyen"></select>
+                                <label for="tinhthanh">
+                                    Địa chỉ
+                                </label>
+                                <input type="text" placeholder="Địa chỉ *">
+                                <input type="text" placeholder="Địa chỉ *">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="order-message">
+                        <p>Ghi Chú</p>
+                        <textarea name="message" placeholder="Ghi chú về đơn đặt hàng của bạn, Ghi chú đặc biệt khi giao hàng" rows="16"></textarea>
+                        <label><input type="checkbox"> Vận chuyển đến địa chỉ thanh toán</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="review-payment">
+            <h2>Danh sách sản phẩm</h2>
+        </div>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Sản phẩm</td>
+                        <td class="description"></td>
+                        <td class="price">Giá</td>
+                        <td class="quantity">Số lượng</td>
+                        <td class="total">Thành tiền</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+
+                    use Model\Common;
+                    use Model\GioHang;
+                    use Model\SanPham;
+
+                    $gioHang = new GioHang();
+                    $DanhSachSanPham = $gioHang->DanhSachSanPham();
+                    foreach ($DanhSachSanPham as $maSanPham => $sanpham) {
+                        $_item = new SanPham($sanpham);
+                    ?>
+                        <tr>
+                            <td class="cart_product" style="margin: 0px;">
+                                <a href=""><img onerror="handleError(this);" style="height: 100px;" src="<?php echo $_item->UrlImages; ?>" alt="<?php echo $_item->Name ?>" /></a>
+                            </td>
+                            <td class="cart_description">
+                                <h4><a href=""><?php echo $_item->Name ?></a></h4>
+                                <p>Web ID: <?php echo $_item->Id ?></p>
+                            </td>
+                            <td class="cart_price">
+                                <p><?php echo $_item->Price() ?></p>
+                            </td>
+                            <td class="cart_quantity">
+                                <div class="cart_quantity_button">
+                                    <a class="cart_quantity_up" href="<?php echo GioHang::LinkThemSoLuong($_item->Id); ?>"> + </a>
+                                    <input class="cart_quantity_input" type="text" name="quantity" value="<?php echo $_item->number ?>" autocomplete="off" size="2" />
+                                    <a class="cart_quantity_down" href="<?php echo GioHang::LinkGiamSoLuong($_item->Id); ?>"> - </a>
+                                </div>
+                            </td>
+                            <td class="cart_total">
+                                <p class="cart_total_price"><?php echo $_item->ThanhTienView() ?></p>
+                            </td>
+                            <td class="cart_delete">
+                                <a class="cart_quantity_delete" href="<?php echo GioHang::LinkXoaSanPham($_item->Id); ?>"><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="payment-options">
+            <span>
+                <label><input type="checkbox"> Direct Bank Transfer</label>
+            </span>
+            <span>
+                <label><input type="checkbox"> Check Payment</label>
+            </span>
+            <span>
+                <label><input type="checkbox"> Paypal</label>
+            </span>
+        </div>
+    </div>
+</section>
+<!--/#cart_items-->
