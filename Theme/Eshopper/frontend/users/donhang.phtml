@@ -1,0 +1,13 @@
+<div class="container">
+    <h1>Xin chào: <?php
+
+                    use Model\User;
+
+                    echo User::CurentUser()["Fullname"]; ?></h1>
+    <ol>
+        <li><a href="/users/taikhoan/">Trang tài khoản</a></li>
+        <li><a href="/users/baomat/">Trang Bảo mật</a></li>
+        <li><a href="/users/donhang/">Trang đơn hàng</a></li>
+        <li><a href="/users/logout/">Đăng xuất</a></li>
+    </ol>
+</div>

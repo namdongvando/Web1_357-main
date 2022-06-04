@@ -30,4 +30,14 @@ class apiController extends Applications
         }
         echo json_encode($a, JSON_UNESCAPED_UNICODE);
     }
+    function getquanhuyen()
+    {
+        header('Content-Type: application/html; charset=utf-8');
+        $tinhThanh = new TinhThanh();
+        $quanHuyens = $tinhThanh->GetByParent($this->getParams()[0]);
+        $a = [];
+        while ($row = $quanHuyens->fetch_assoc()) {
+            echo "<option value='{$row["Id"]}' >{$row["Name"]}</option>";
+        }
+    }
 }

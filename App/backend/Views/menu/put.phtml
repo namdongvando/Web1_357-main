@@ -20,7 +20,7 @@
 
                 $id =  $_Params[0] ?? "";
                 $menu = new Menu($id);
-                $nameMenu = $menu->GroupName;
+                $nameMenu = $_Params[1] ?? $menu->GroupName;
 
                 use Model\Menu\MenuForm;
 
@@ -61,7 +61,7 @@
     $(function() {
         $("#SelectGroupName").change(function() {
             //alert($(this).val());
-            window.location.href = `/backend/menu/post/${$(this).val()}`;
+            window.location.href = `/backend/menu/put/<?php echo $id; ?>/${$(this).val()}`;
         });
     });
 </script>

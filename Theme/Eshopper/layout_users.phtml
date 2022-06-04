@@ -33,7 +33,24 @@
   use Theme\Eshopper\Functions;
 
   Functions::Header();
-  include $_Content;
+  ?>
+  <div class="container">
+    <div class="col-md-3">
+      <ol>
+        <li><a href="/users/taikhoan/">Trang tài khoản</a></li>
+        <li><a href="/users/baomat/">Trang Bảo mật</a></li>
+        <li><a href="/users/donhang/">Trang đơn hàng</a></li>
+        <li><a href="/users/logout/">Đăng xuất</a></li>
+      </ol>
+    </div>
+    <div class="col-md-9">
+      <?php
+      include $_Content;
+      ?>
+    </div>
+  </div>
+  <?php
+
   Functions::Footer();
   ?>
   <!--/Footer-->
@@ -43,6 +60,7 @@
   <script src="/public/Eshopper/js/price-range.js"></script>
   <script src="/public/Eshopper/js/jquery.prettyPhoto.js"></script>
   <script src="/public/Eshopper/js/main.js"></script>
+  <script src="/public/TinhThanhPho/TinhThanh.js"></script>
 </body>
 
 </html>

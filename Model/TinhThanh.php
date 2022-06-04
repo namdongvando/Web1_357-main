@@ -52,6 +52,15 @@ class TinhThanh extends DB implements IModelCRUD
             $this->WhereEq("IDP", $id)
         );
     }
+
+    public function GetByParent2Options($parent)
+    {
+        return $this->Select2Options(
+            self::TableName,
+            $this->WhereEq("IDP", $parent),
+            ["Id", "Name"]
+        );
+    }
     /**
      *
      * @return mixed
