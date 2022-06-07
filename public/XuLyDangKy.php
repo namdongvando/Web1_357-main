@@ -17,13 +17,11 @@ try {
     if ($user["Email"] == "") {
         throw new Exception("Bạn Chưa Nhận Email");
     }
-    if (!filter_var($user["Email"], FILTER_VALIDATE_EMAIL))
-    {
+    if (!filter_var($user["Email"], FILTER_VALIDATE_EMAIL)) {
         throw new Exception("Email Không Đúng Định Dạng");
     }
-// them tai khoan vao database
+    // them tai khoan vao database
 } catch (Exception $e) {
-    echo $e->getMessage(); 
+    echo $e->getMessage();
     header("Location: dangky.php?e={$e->getMessage()}");
-
 }

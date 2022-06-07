@@ -2,12 +2,19 @@
 
 namespace Model;
 
+
 class Common
 {
     const MoneyVND = "vnd";
     const MoneyDola = "dola";
     public static $TypeMoney = "vnd";
-
+    public static function InputText($text)
+    {
+        $text = trim($text);
+        $text = strip_tags($text);
+        $text = htmlspecialchars($text);
+        return $text;
+    }
     public static function ViewMoney($number)
     {
         if (self::$TypeMoney == self::MoneyVND)

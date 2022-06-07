@@ -1,3 +1,16 @@
+<?php
+
+use Model\GioHang;
+use Model\SanPham;
+use Model\Common;
+use Model\FormCommon;
+use Model\User;
+
+$userLogin = User::CurentUser();
+if ($userLogin == null) {
+    Common::ToUrl("/users/");
+}
+?>
 <section id="cart_items">
     <div class="container">
         <div class="breadcrumbs">
@@ -7,78 +20,45 @@
             </ol>
         </div>
 
-        <div class="step-one">
-            <h2 class="heading">Bước 1</h2>
-        </div>
-        <div class="checkout-options">
-            <h3>Thành viên mới</h3>
-            <p>Tùy chọn đặt hàng</p>
-            <ul class="nav">
-                <li>
-                    <label><input type="checkbox"> đăng ký tài khoản</label>
-                </li>
-                <li>
-                    <label><input type="checkbox"> khách vãnh lai</label>
-                </li>
-                <li>
-                    <a href=""><i class="fa fa-times"></i>thoát</a>
-                </li>
-            </ul>
-        </div>
-        <!--/checkout-options-->
-
-        <div class="register-req">
-            <p>Vui lòng sử dụng Đăng ký và Kiểm tra để dễ dàng truy cập vào lịch sử đơn đặt hàng của bạn hoặc sử dụng Checkout với tư cách Khách</p>
-        </div>
-        <!--/register-req-->
-
         <div class="shopper-informations">
             <div class="row">
-                <div class="col-sm-3">
-                    <div class="shopper-info">
-                        <p>Thông tin người mua hàng</p>
-                        <form>
-                            <input type="text" placeholder="Display Name">
-                            <input type="text" placeholder="User Name">
-                            <input type="text" placeholder="Email*">
-                            <input type="password" placeholder="Password">
-                            <input type="password" placeholder="Confirm password">
-                        </form>
-                        <a class="btn btn-primary" href="">Get Quotes</a>
-                        <a class="btn btn-primary" href="">Continue</a>
-                    </div>
-                </div>
-                <div class="col-sm-5 clearfix">
-                    <div class="bill-to">
-                        <p>Thông Tin giao hàng</p>
-                        <div class="form-one" style="width: auto;">
-                            <form>
-                                <input type="text" placeholder="Tên người nhận *">
-                                <input type="text" placeholder="SĐT *">
-                                <label for="tinhthanh">
-                                    tỉnh thành
-                                </label>
-                                <select id="TinhThanh" onchange="SetQuanHuyen2Html(this.value)" name="TinhThanh"></select>
-                                <label for="quanhuyen">
-                                    Quận huyện
-                                </label>
-                                <select id="QuanHuyen" name="quanHuyen"></select>
+                <form action="" method="post">
+                    <div class="col-sm-5 clearfix">
+                        <div class="bill-to">
+                            <p>Thông Tin giao hàng</p>
+                            <div class=" " style="width: auto;">
+                                <label>Tên người nhận *</label>
+                                <input name="Fullname" value="<?php echo $userLogin["Fullname"] ?>" class="form-control" type="text" placeholder="Tên người nhận *">
+                                <label>SĐT *</label>
+                                <input name="Phone" value="<?php echo $userLogin["Phone"] ?>" class="form-control" type="text" placeholder="SĐT *">
+                                <?php
+                                FormCommon::Province("TinhThanh", $userLogin["Province"], "tinhThanh_checkout", "quanhuyen_checkout")->renderHTML();
+                                FormCommon::District(
+                                    "quanhuyen",
+                                    $userLogin["District"],
+                                    $userLogin["Province"],
+                                    "quanhuyen_checkout"
+                                )->renderHTML();
+                                ?>
+
                                 <label for="diachi">
                                     Địa chỉ
                                 </label>
-                                <input type="text" placeholder="Địa chỉ *">
-                                <input type="text" placeholder="Địa chỉ *">
-                            </form>
+                                <input name="Address" value="<?php echo $userLogin["Address"] ?>" class="form-control" type="text" placeholder="Địa chỉ *">
+
+
+                            </div>
+                            <button style="margin-top: 15px;" class="btn btn-success" onclick="return confirm('bạn có chắc không?');">Đặt hàng</button>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="order-message">
-                        <p>Ghi Chú</p>
-                        <textarea name="message" placeholder="Ghi chú về đơn đặt hàng của bạn, Ghi chú đặc biệt khi giao hàng" rows="16"></textarea>
-                        <label><input type="checkbox"> Vận chuyển đến địa chỉ thanh toán</label>
+                    <div class="col-sm-4">
+                        <div class="order-message">
+                            <p>Ghi Chú</p>
+                            <textarea name="message" placeholder="Ghi chú về đơn đặt hàng của bạn, Ghi chú đặc biệt khi giao hàng" rows="16"></textarea>
+                            <label><input type="checkbox"> Vận chuyển đến địa chỉ thanh toán</label>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
         <div class="review-payment">
@@ -99,9 +79,7 @@
                 <tbody>
                     <?php
 
-                    use Model\Common;
-                    use Model\GioHang;
-                    use Model\SanPham;
+
 
                     $gioHang = new GioHang();
                     $DanhSachSanPham = $gioHang->DanhSachSanPham();
@@ -140,17 +118,6 @@
                 </tbody>
             </table>
 
-        </div>
-        <div class="payment-options">
-            <span>
-                <label><input type="checkbox"> Direct Bank Transfer</label>
-            </span>
-            <span>
-                <label><input type="checkbox"> Check Payment</label>
-            </span>
-            <span>
-                <label><input type="checkbox"> Paypal</label>
-            </span>
         </div>
     </div>
 </section>

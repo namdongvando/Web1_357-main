@@ -1,13 +1,29 @@
-<div class="container">
-    <h1>Xin chào: <?php
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <h1>Bảo mật</h1>
+        <form action="" method="post">
 
-                    use Model\User;
+            <?php
 
-                    echo User::CurentUser()["Fullname"]; ?></h1>
-    <ol>
-        <li><a href="/users/taikhoan/">Trang tài khoản</a></li>
-        <li><a href="/users/baomat/">Trang Bảo mật</a></li>
-        <li><a href="/users/donhang/">Trang đơn hàng</a></li>
-        <li><a href="/users/logout/">Đăng xuất</a></li>
-    </ol>
+            use Model\Error;
+            use Model\Users\UsersPassword;
+
+            $error = Error::get();
+            if ($error != null) {
+            ?>
+                <div class="alert alert-<?php echo $error->type; ?>">
+                    <?php echo $error->content; ?>
+                </div>
+            <?php
+            }
+            $FormPass = new UsersPassword();
+            $FormPass->password()->renderHTML();
+            $FormPass->newpassword()->renderHTML();
+            $FormPass->repassword()->renderHTML();
+            ?>
+            <button class="btn btn-success" type="submit">Lưu</button>
+        </form>
+    </div>
+
 </div>

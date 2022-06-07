@@ -3,11 +3,14 @@
 namespace App\frontend\Controller;
 
 use Applications;
+use Error;
+use Exception;
 use Model\Common;
 use Model\GioHang;
 use Model\SanPham;
 use Model\User;
 use Model\Users\UsersForm;
+use Model\Users\UsersPassword;
 
 class usersController extends Applications
 {
@@ -43,6 +46,46 @@ class usersController extends Applications
     }
     public function baomat()
     {
+        if (isset($_POST[UsersPassword::FormName])) {
+            try {
+                $formPost = $_POST[UsersPassword::FormName];
+                // kiểm tra chuỗi nhập vào có hợp lệ không
+                $password =
+                    Common::InputText($formPost["password"]);
+                $userName = User::CurentUser()["Username"];
+                $modelUser = new User();
+                $userDB = $modelUser->GetUserByUserPassword($userName, $password);
+                // mật khẩu không đúng
+                if ($userDB == null) {
+                    throw new Exception("Mật khẩu không đúng");
+                }
+                // mật khẩu đúng
+                $newpassword =
+                    Common::InputText($formPost["newpassword"]);
+                $repassword =
+                    Common::InputText($formPost["repassword"]);
+                // kiểm tra mật khẩu mới
+                if ($newpassword != $repassword) {
+                    throw new Exception("Mật khẩu mới không khớp");
+                }
+                // mật khẩu đã khớp
+                // cập nhật mật khẩu vào database
+                $item["Id"] = User::CurentUser()["Id"];
+                // mã hóa mật khẩu
+                $item["Password"] = sha1($newpassword);
+                // update database
+                $modelUser->Put($item);
+                $er["type"] = \Model\Error::success;
+                $er["content"] = "Cập nhật thành công";
+                \Model\Error::set($er);
+            } catch (Exception $ex) {
+                $ex->getMessage();
+                $er["type"] = \Model\Error::danger;
+                $er["content"] = $ex->getMessage();
+                \Model\Error::set($er);
+            }
+        }
+
         $this->View();
     }
     public function donhang()
