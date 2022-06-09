@@ -4,6 +4,7 @@ namespace App\cart\Controller;
 
 use Applications;
 use Exception;
+use Model\Common;
 use Model\DB;
 use Model\GioHang;
 use Model\Order;
@@ -48,10 +49,19 @@ class checkoutController extends Applications
                     $orderDetail["Price"] = $sp["Price"];
                     $modeOrderDetail->Post($orderDetail);
                 }
+                Common::ToUrl("/cart/checkout/success/{$item["Id"]}");
             } catch (Exception $ex) {
+                // loi
+
             }
         }
 
         $this->View();
+    }
+    // trang thông báo đạt hàng thàng công.
+    public function success()
+    {
+        $id = $this->getParams(0);
+        $this->View(["id" => $id]);
     }
 }

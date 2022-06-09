@@ -8,6 +8,78 @@ class GioHang
     public function __construct()
     {
     }
+
+    function DatHangThanhCong($maDonHang)
+    {
+        $content = "";
+        $path = "public/pagesCartSuccess.html";
+        if (file_exists($path)) {
+            $content = file_get_contents($path);
+        }
+        $order = new Order($maDonHang);
+
+        // thông tin người mua
+        $nguoiMua = <<<NGUOIMUA
+        <table class="table " >
+                        <tr>
+                            <td>Họ Tên</td>
+                            <td>{$order->User()->Fullname}</td>
+                        </tr>
+                        <tr>
+                            <td>SDT</td>
+                            <td>{$order->Phone}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{$order->User()->Email}</td>
+                        </tr>
+                    </table>  
+NGUOIMUA;
+        $dsSanPham =  $this->DanhSachSanPhamHtml($order->GetOrderDetail());
+        // danh sách sản phẩm
+
+        $content = str_replace("[NguoiMua]", $nguoiMua, $content);
+        $content = str_replace("[DSSanPham]", $dsSanPham, $content);
+        return $content;
+    }
+
+    public function DanhSachSanPhamHtml($DanhSachSanPham)
+    {
+        ob_start();
+?>
+        <table class="table">
+
+            <?php
+            foreach ($DanhSachSanPham as $maSanPham => $sanpham) {
+
+                $_item = new SanPham($sanpham["IdProduct"]);
+                $_item->number = $sanpham["Numbers"];
+                $_item->Price = $sanpham["Price"];
+            ?>
+                <tr>
+                    <td class="cart_product" style="margin: 0px;">
+                        <a href=""><img onerror="handleError(this);" style="height: 100px;" src="<?php echo $_item->UrlImages; ?>" alt="<?php echo $_item->Name ?>" /></a>
+                    </td>
+                    <td class="cart_description">
+                        <h4><a href=""><?php echo $_item->Name ?></a></h4>
+                        <p>Web ID: <?php echo $_item->Id ?></p>
+                        <p>SL: <?php echo $_item->number ?></p>
+                    </td>
+                    <td class="cart_price">
+                        <p><?php echo $_item->Price() ?></p>
+                    </td>
+                    <td class="cart_total">
+                        <p class="cart_total_price"><?php echo $_item->ThanhTienView() ?></p>
+                    </td>
+                </tr>
+            <?php
+            }
+            ?>
+        </table>
+<?php $str = ob_get_clean();
+        return $str;
+    }
+
     public function ThemSoLuong($idSanPham, $sl)
     {
         $_SESSION[self::TenGioHang][$idSanPham]["number"] += $sl;

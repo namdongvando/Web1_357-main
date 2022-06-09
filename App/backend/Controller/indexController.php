@@ -17,9 +17,9 @@ class indexController extends AuthController
     {
         $dm = new DanhMuc();
         $rows = 0;
-        $dm->GetPaging([],1,10,$rows);
+        $dm->GetPaging([], 1, 10, $rows);
         echo $rows;
-        
+
 
         // echo "mac định";
         // self::$ControllerName;

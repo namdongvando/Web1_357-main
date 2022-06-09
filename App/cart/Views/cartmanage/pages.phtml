@@ -1,0 +1,31 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lý đặt hàng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Nội dung trang đặt hàng thành công</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<div class="container">
+    <div class="card text-left">
+        <div class="card-body">
+            <div class="card-text">
+                <form action="" method="POST">
+                    <p>Nội dung trang đạt hàng thành công</p>
+                    <p>[NguoiMua][DSSanPham]</p>
+                    <p>[NguoiMua] : đại diện cho thông tin người mua </p>
+                    <p>[DSSanPham] : đại diện danh sách sản phẩm </p>
+                    <textarea name="Content" id="content"><?php echo $data["content"]; ?></textarea>
+                    <button class="btn btn-success">Lưu</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -40,6 +40,12 @@ class Order extends DB implements IModelCRUD
         $this->PaymentStatus = $item["PaymentStatus"] ?? null;
     }
 
+    // tài khoản đạt hàng của đơn hàng hiện tại
+    function User()
+    {
+        return new User($this->UserId);
+    }
+
     function Post($item)
     {
         return $this->Insert(self::TableName, $item);
@@ -138,6 +144,17 @@ class Order extends DB implements IModelCRUD
             $count = $res->num_rows + 1;
         }
         // DH-20220602-1
-        return Date("DH-ymd-", time()) . $count;
+        return Date("DH-Ymd-", time()) . $count;
+    }
+    function GetByUserId($idUser, $pageIndex, $pageNumber, &$totalRows)
+    {
+        $where = $this->WhereEq("UserId", $idUser);
+        return $this->QueryPaging(
+            self::TableName,
+            $where,
+            $pageIndex,
+            $pageNumber,
+            $totalRows
+        );
     }
 }

@@ -1,13 +1,57 @@
-<div class="container">
-    <h1>Xin chào: <?php
+<?php
 
-                    use Model\User;
+use Model\Order;
+use Model\User;
 
-                    echo User::CurentUser()["Fullname"]; ?></h1>
-    <ol>
-        <li><a href="/users/taikhoan/">Trang tài khoản</a></li>
-        <li><a href="/users/baomat/">Trang Bảo mật</a></li>
-        <li><a href="/users/donhang/">Trang đơn hàng</a></li>
-        <li><a href="/users/logout/">Đăng xuất</a></li>
-    </ol>
+$order  = new Order();
+$idUser = User::CurentUser()["Id"];
+$totalRows = 0;
+$pageIndex = $_GET["page"] ?? 1;
+$pageNumber = $_GET["number"] ?? 10;
+// kiêm tra trang thứ bao nhieu
+$pageIndex = intval($pageIndex);
+$pageIndex = max($pageIndex, 1);
+// kiểm tra so luong dòng
+$pageNumber = intval($pageNumber);
+$pageNumber = max($pageNumber, 10);
+
+$dsDonHang = $order->GetByUserId(
+    $idUser,
+    $pageIndex,
+    $pageNumber,
+    $totalRows
+);
+
+?>
+<div class="">
+    <h1>Danh Sách Đơn Hàng</h1>
+    <table class="table table-border">
+        <tr>
+            <td>STT</td>
+            <td>Ngày Đăt</td>
+            <td>Số Sản Phẩm</td>
+            <td>Tổng Tiền</td>
+            <td>action</td>
+        </tr>
+        <?php
+        $index = 1;
+        while ($rows = $dsDonHang->fetch_assoc()) {
+            $_item = new Order($rows);
+            echo $html = <<<DONHANG
+            <tr>
+                <td>{$index}</td>
+                <td>{$_item->DateCreate}</td>
+                <td>{$_item->CountProduct}</td>
+                <td>{$_item->TotalPrice}</td>
+                <td>
+                <a class="btn btn-success" href="/users/donhang/detail/{$_item->Id}" >Xem</a>
+                <a class="btn btn-danger" href="/users/donhang/huy/{$_item->Id}" >Hủy</a>
+                </td>
+            </tr>
+
+DONHANG;
+            $index++;
+        }
+        ?>
+    </table>
 </div>
