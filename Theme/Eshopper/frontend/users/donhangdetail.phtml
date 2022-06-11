@@ -1,0 +1,83 @@
+<?php
+
+use Model\Common;
+use Model\Order;
+use Model\SanPham;
+
+// echo $_Params[0];
+$order = new Order($_Params[0]);
+
+?>
+<h1>Đơn hàng</h1>
+<h2>Thông Tin Giao Hàng</h2>
+<table class="table table-thongtingiaohang">
+    <tbody>
+        <tr>
+            <td>Họ Tên</td>
+            <td><?php echo $order->User()->Fullname ?></td>
+        </tr>
+        <tr>
+            <td>SĐT</td>
+            <td><?php echo $order->Phone ?></td>
+        </tr>
+        <tr>
+            <td>Địa Chỉ</td>
+            <td><?php echo $order->User()->Address ?></td>
+        </tr>
+        <tr>
+            <td>Số sản phẩm</td>
+            <td><?php echo $order->CountProduct ?></td>
+        </tr>
+        <tr>
+            <td>Tổng tiền</td>
+            <td><?php echo Common::ViewMoney($order->TotalPrice);  ?></td>
+        </tr>
+        <tr>
+            <td>Tình Trạng</td>
+            <td><?php echo $order->Status()->Name; ?></td>
+        </tr>
+    </tbody>
+</table>
+<h2>Danh sách sản phẩm</h2>
+<table class="table table-thongtingiaohang">
+    <tbody>
+        <tr>
+            <td>Stt</td>
+            <td>Tên sản phẩm</td>
+            <td>SL</td>
+            <td>Gia</td>
+            <td>Thanh Tiền</td>
+        </tr>
+        <?php
+        // danh sách sản phẩm
+        $dsSanPham = $order->GetOrderDetail();
+        $index = 1;
+        while ($row = $dsSanPham->fetch_assoc()) {
+            $item = new SanPham($row["IdProduct"]);
+            $item->Price = $row["Price"];
+            $item->number = $row["Numbers"];
+            $price = Common::ViewMoney($item->Price);
+            echo $Html = <<<ROWSANPHAM
+            <tr>
+                <td>{$index}</td>
+                <td>{$item->Name}</td>
+                <td>{$item->number}</td>
+                <td>{$price}</td>
+                <td>{$item->ThanhTienView()}</td>
+             </tr> 
+ROWSANPHAM;
+            $index++;
+        }
+        ?>
+    </tbody>
+</table>
+<?php
+$link = "/users/donhanghuy/{$_Params[0]}";
+?>
+<?php
+if ($order->Status == 1) {
+?>
+    <a href="<?php echo $link ?>" onclick="return confirm('Bạn có muốn hủy đơn hàng này?');" class="btn btn-danger">Hủy</a>
+<?php
+}
+?>

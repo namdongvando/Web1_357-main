@@ -12,7 +12,9 @@ body {
   position: relative;
   font-weight:400px;
 }
-
+.sr-only{
+  display: none;
+}
 ul li {
   list-style: none;
 }

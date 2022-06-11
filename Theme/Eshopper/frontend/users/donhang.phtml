@@ -1,5 +1,6 @@
 <?php
 
+use Model\Common;
 use Model\Order;
 use Model\User;
 
@@ -29,8 +30,12 @@ $dsDonHang = $order->GetByUserId(
         <tr>
             <td>STT</td>
             <td>Ngày Đăt</td>
+            <td>Họ & Tên</td>
+            <td>SĐT</td>
+            <td>Địa Chỉ</td>
             <td>Số Sản Phẩm</td>
             <td>Tổng Tiền</td>
+            <td>Tình Trạng</td>
             <td>action</td>
         </tr>
         <?php
@@ -41,11 +46,15 @@ $dsDonHang = $order->GetByUserId(
             <tr>
                 <td>{$index}</td>
                 <td>{$_item->DateCreate}</td>
-                <td>{$_item->CountProduct}</td>
+                <td>{$_item->User()->Fullname}</td>
+                <td>{$_item->User()->Phone}</td>
+                <td>{$_item->User()->Address}</td>
+                <td>{$_item->CountProduct}</td> 
                 <td>{$_item->TotalPrice}</td>
+                <td>{$_item->Status()->Name}</td>
                 <td>
-                <a class="btn btn-success" href="/users/donhang/detail/{$_item->Id}" >Xem</a>
-                <a class="btn btn-danger" href="/users/donhang/huy/{$_item->Id}" >Hủy</a>
+                    <a class="btn btn-success" href="/users/donhangdetail/{$_item->Id}" >Xem</a>
+                  
                 </td>
             </tr>
 
@@ -53,5 +62,15 @@ DONHANG;
             $index++;
         }
         ?>
+
     </table>
+    <?php
+    $tongTrang = ceil($totalRows / $pageNumber);
+    $linkPhanTrang = "/users/donhang/?page=[i]&number={$pageNumber}";
+    echo Common::PhanTrang(
+        $tongTrang,
+        $pageIndex,
+        $linkPhanTrang
+    );
+    ?>
 </div>

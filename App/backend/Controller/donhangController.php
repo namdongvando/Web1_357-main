@@ -8,4 +8,8 @@ class donhangController extends BaseController
     {
         echo "donhang>index";
     }
+    public function detail()
+    {
+        echo "donhang>index";
+    }
 }

@@ -7,6 +7,23 @@ use PFBC\Element\Select;
 class FormCommon
 {
     const Properties = ["class" => "form-control"];
+
+    static public function SelectOptions($name, $val, $optionGroupName, $prop = [])
+    {
+        $properties = self::Properties;
+        // set properties
+        if ($prop) {
+            foreach ($prop as $key => $v) {
+                $properties[$key] = $v;
+            }
+        }
+        $properties["value"] = $val;
+        $lable = $prop["lable"] ?? "";
+        $modelOption = new Options();
+        $options = $modelOption->GetByGroupName2Options($optionGroupName);
+        return new FormRender(new Select($lable, $name, $options, $properties));
+    }
+
     static function Province($name, $val = null, $id = "", $target = "")
     {
         $properties = self::Properties;

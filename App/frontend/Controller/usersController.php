@@ -7,6 +7,7 @@ use Error;
 use Exception;
 use Model\Common;
 use Model\GioHang;
+use Model\Order;
 use Model\SanPham;
 use Model\User;
 use Model\Users\UsersForm;
@@ -91,6 +92,21 @@ class usersController extends Applications
     public function donhang()
     {
         $this->View();
+    }
+    public function donhangdetail()
+    {
+        $this->View();
+    }
+    public function donhanghuy()
+    {
+        $id = $this->getParams(0);
+        $order  = new Order();
+        $orderDetail = $order->GetById($id);
+        if ($orderDetail["Status"] == Order::MoiDat) {
+            $orderDetail["Status"] = Order::KhachHangHuy;
+            $order->Put($orderDetail);
+        }
+        Common::ToUrl("/users/donhangdetail/{$id}");
     }
     public function logout()
     {

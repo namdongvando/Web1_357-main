@@ -1,0 +1,103 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách đơn hàng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Danh sách đơn hàng</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<div class="container">
+    <div class="card text-left">
+        <div class="card-body">
+            <?php
+
+            use Model\Common;
+            use Model\FormCommon;
+            use Model\Order;
+
+            $Keyword = $_GET["Keyword"] ?? "";
+            $status = $_GET["status"] ?? "";
+            $fromDate = $_GET["fromDate"] ?? "";
+            $toDate = $_GET["toDate"] ?? "";
+            $indexPage = $_GET["page"] ?? 1;
+            $pageNumber = $_GET["number"] ?? 10;
+            $order = new Order();
+            $params["keyword"] = Common::InputText($Keyword);
+            $params["status"] = Common::InputText($status);
+            $params["fromDate"] = date("Y-m-d", strtotime($fromDate));
+            $params["toDate"] =  date("Y-m-d", strtotime($toDate) + 24 * 3600);
+
+            $DSDonHang = $order->GetPaging($params, $indexPage, $pageNumber, $totalRows);
+            ?>
+            <form action="/cart/cartmanage/danhsachdonhang/">
+                <div class="row">
+                    <div class="col-3 form-group">
+                        <label>Từ khóa</label>
+                        <input value="<?php echo $Keyword ?>" name="Keyword" placeholder="SĐT,Mã,Họ Tên" class="form-control">
+                    </div>
+                    <div class="col-3">
+                        <?php
+                        FormCommon::SelectOptions("status", $status, "OrderStatus", ["lable" => "Tình Trạng"])->renderHTML();
+                        ?>
+                    </div>
+                    <div class="col-2 form-group">
+                        <label>Từ Ngày</label>
+                        <input type="date" value="<?php echo $fromDate ?>" name="fromDate" class="form-control">
+                    </div>
+                    <div class="col-2 form-group">
+                        <label>Đến Ngày</label>
+                        <input type="date" value="<?php echo $toDate ?>" name="toDate" class="form-control">
+                    </div>
+                    <div class="col-1">
+                        <button style="margin-top: 30px;" class="btn btn-primary">Lọc</button>
+                    </div>
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Stt</th>
+                        <th>Họ Tên</th>
+                        <th>SĐT</th>
+                        <th>Số SP</th>
+                        <th>Tổng Tiền</th>
+                        <th>Tình Trạng</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $index = 1;
+                    if ($DSDonHang)
+                        while ($row = $DSDonHang->fetch_assoc()) {
+                            $item = new Order($row);
+                            echo  $html = <<<HTML
+                        <tr>
+                            <th>{$index}</th>
+                            <th>{$item->User()->Fullname}</th>
+                            <th>{$item->User()->Phone}</th>
+                            <th>{$item->CountProduct}</th>
+                            <th>{$item->TotalPrice}</th>
+                            <th>{$item->Status()->Name}</th>
+                            <th>
+                                <a href="/cart/cartmanage/detail/{$item->Id}" >Xem</a>
+                            </th>
+                        </tr>
+HTML;
+                            $index++;
+                        }
+                    ?>
+                </tbody>
+            </table>
+            <div>Phân Trang
+            </div>
+        </div>
+    </div>
+</div>

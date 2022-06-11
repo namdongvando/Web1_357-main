@@ -5,7 +5,8 @@ namespace Model;
 
 class Order extends DB implements IModelCRUD
 {
-
+    const MoiDat = 1;
+    const KhachHangHuy = 3;
     public $Id;
     public $UserId;
     public $AddressId;
@@ -44,6 +45,18 @@ class Order extends DB implements IModelCRUD
     function User()
     {
         return new User($this->UserId);
+    }
+
+    public function Status()
+    {
+        //	OrderStatus
+        $options = new Options();
+        return new Options(
+            $options->GetByGroupNameAndCode(
+                "OrderStatus",
+                $this->Status
+            )
+        );
     }
 
     function Post($item)

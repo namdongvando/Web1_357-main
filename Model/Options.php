@@ -23,6 +23,15 @@ class Options extends DB implements IModelCRUD
         $this->Description = $item["Description"] ?? null;
         $this->GroupName = $item["GroupName"] ?? null;
     }
+
+    public function GetByGroupNameAndCode($groupName, $code)
+    {
+        // nhiều nhất 1 dòng
+        $where =  $this->WhereEq("GroupName", $groupName);
+        $where .= $this->WhereAnd($this->WhereEq("Code", $code));
+        return $this->SELECTROW(self::TableName, $where);
+    }
+
     /**
      *
      * @param mixed $item
