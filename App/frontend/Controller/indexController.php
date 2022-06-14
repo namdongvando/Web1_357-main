@@ -4,6 +4,7 @@ namespace App\frontend\Controller;
 
 use Applications;
 use Model\Common;
+use Model\Setting;
 
 class indexController extends Applications
 {
@@ -12,8 +13,10 @@ class indexController extends Applications
      */
     public function __construct()
     {
-        $this->setTheme("Eshopper");
-        $this->setLayout("Theme/Eshopper/layout_home.phtml");
+        $setting = new Setting();
+        $themeName = $setting->GetByCode("ThemeName");
+        $this->setTheme($themeName["Description"]);
+        $this->setLayout("Theme/{$themeName["Description"]}/layout_home.phtml");
     }
     function index()
     {

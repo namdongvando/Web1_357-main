@@ -31,9 +31,11 @@
             $order = new Order();
             $params["keyword"] = Common::InputText($Keyword);
             $params["status"] = Common::InputText($status);
-            $params["fromDate"] = date("Y-m-d", strtotime($fromDate));
-            $params["toDate"] =  date("Y-m-d", strtotime($toDate) + 24 * 3600);
-
+            if ($fromDate != "")
+                $params["fromDate"] = date("Y-m-d", strtotime($fromDate));
+            if ($toDate != "")
+                $params["toDate"] =  date("Y-m-d", strtotime($toDate) + 24 * 3600);
+            $totalRows = 0;
             $DSDonHang = $order->GetPaging($params, $indexPage, $pageNumber, $totalRows);
             ?>
             <form action="/cart/cartmanage/danhsachdonhang/">
@@ -87,7 +89,7 @@
                             <th>{$item->TotalPrice}</th>
                             <th>{$item->Status()->Name}</th>
                             <th>
-                                <a href="/cart/cartmanage/detail/{$item->Id}" >Xem</a>
+                                <a href="/cart/cartmanage/detail/{$item->Id}" >Chi Tiết</a>
                             </th>
                         </tr>
 HTML;
@@ -96,7 +98,14 @@ HTML;
                     ?>
                 </tbody>
             </table>
-            <div>Phân Trang
+            <div>
+                <?php
+
+                $totalPage = ceil($totalRows / $pageNumber);
+                $link = "/cart/cartmanage/danhsachdonhang/?Keyword={$Keyword}&status={$status}&fromDate={$fromDate}&toDate={$toDate}&page=[i]&number={$pageNumber}";
+                echo Common::PhanTrang($totalPage, $indexPage, $link);
+                ?>
+
             </div>
         </div>
     </div>

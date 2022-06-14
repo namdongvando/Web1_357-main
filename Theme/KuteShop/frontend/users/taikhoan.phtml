@@ -1,0 +1,26 @@
+<div>
+    <h1>Tài khoản</h1>
+    <form action="" method="post">
+        <?php
+
+        use Model\User;
+        use Model\Users\UsersForm;
+
+        $user  = new UsersForm();
+        $user->Fullname(User::CurentUser()["Fullname"])->renderHTML();
+        $user->Username(User::CurentUser()["Username"])->renderHTML();
+        $user->Email(User::CurentUser()["Email"])->renderHTML();
+        $user->Phone(User::CurentUser()["Phone"])->renderHTML();
+        $user->Province(User::CurentUser()["Province"], "Id_Province", "Id_District")->renderHTML();
+        $user->District(
+            User::CurentUser()["District"],
+            User::CurentUser()["Province"],
+            "Id_District"
+        )->renderHTML();
+        ?>
+        <div class="text-right">
+            <button class="btn btn-warning">Lưu</button>
+        </div>
+
+    </form>
+</div>

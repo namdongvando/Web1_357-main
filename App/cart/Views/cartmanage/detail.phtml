@@ -1,0 +1,98 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Chi tiết đơn hàng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Chi tiết đơn hàng</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="card text-left">
+        <div class="card-body">
+            <?php
+
+            use Model\Order;
+            use Model\SanPham;
+
+            $order = new Order($_Params[0]);
+
+            ?>
+            <div>
+                <table class="table table-border">
+                    <tr>
+                        <td>Ho Tên</td>
+                        <td><?php echo $order->User()->Fullname ?></td>
+                    </tr>
+                    <tr>
+                        <td>SĐT</td>
+                        <td><?php echo $order->User()->Phone ?></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><?php echo $order->User()->Email ?></td>
+                    </tr>
+                    <tr>
+                        <td>Địa Chỉ</td>
+                        <td><?php echo $order->User()->Address ?></td>
+                    </tr>
+                    <tr>
+                        <td>Tỉnh Thành</td>
+                        <td><?php echo $order->User()->Province()->Name; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Quận Huyện</td>
+                        <td><?php echo $order->User()->District()->Name ?></td>
+                    </tr>
+                    <tr>
+                        <td>Tình trạng</td>
+                        <td><?php echo $order->Status()->Name ?></td>
+                    </tr>
+                </table>
+
+            </div>
+            <div>
+                <h1>Danh sách sản phẩm</h1>
+                <table class="table table-border">
+                    <tr>
+                        <td>STT</td>
+                        <td>Mã sản phẩm</td>
+                        <td>Tên sản phẩm</td>
+                        <td>Giá</td>
+                        <td>SL</td>
+                        <td>Thành Tiền</td>
+                    </tr>
+                    <?php
+                    $DSSanPham = $order->GetOrderDetail();
+                    if ($DSSanPham) {
+                        $index = 1;
+                        while ($row = $DSSanPham->fetch_assoc()) {
+                            $item = new SanPham($row["IdProduct"]);
+                            $item->Price = $row["Price"];
+                            $item->number = $row["Numbers"];
+                            echo <<<HTML
+                    <tr>
+                        <td>{$index}</td>
+                        <td>{$item->Code}</td>
+                        <td>{$item->Name}</td>
+                        <td>{$item->Price()}</td>
+                        <td>{$item->number}</td>
+                        <td>{$item->ThanhTienView()}</td>
+                    </tr>
+
+HTML;
+                        }
+                    }
+
+                    ?>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

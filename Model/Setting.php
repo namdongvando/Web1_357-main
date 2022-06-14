@@ -65,7 +65,13 @@ class Setting extends DB implements IModelCRUD
             $this->WhereEq("Id", $id)
         );
     }
-
+    function GetByCode($code)
+    {
+        return $this->SELECTROW(
+            self::TableName,
+            $this->WhereEq("Code", $code)
+        );
+    }
     /**
      *
      * @param mixed $params

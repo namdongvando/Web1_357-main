@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Home | E-Shopper</title>
+  <link href="/public/Eshopper/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/public/Eshopper/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="/public/Eshopper/css/prettyPhoto.css" rel="stylesheet" />
+  <link href="/public/Eshopper/css/price-range.css" rel="stylesheet" />
+  <link href="/public/Eshopper/css/animate.css" rel="stylesheet" />
+  <link href="/public/Eshopper/css/main.css" rel="stylesheet" />
+  <link href="/public/Eshopper/css/responsive.css" rel="stylesheet" />
+  <!--[if lt IE 9]>
+      <script src="/public/Eshopper/js/html5shiv.js"></script>
+      <script src="/public/Eshopper/js/respond.min.js"></script>
+    <![endif]-->
+  <link rel="shortcut icon" href="images/ico/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png" />
+  <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png" />
+  <script src="/public/Common.js"></script>
+</head>
+<!--/head-->
+
+<body>
+  <?php
+
+  use Theme\Eshopper\Functions;
+
+  Functions::Header();
+  ?>
+  <div class="container">
+    <div class="col-md-3">
+      <ol>
+        <li><a href="/users/taikhoan/">Trang tài khoản</a></li>
+        <li><a href="/users/baomat/">Trang Bảo mật</a></li>
+        <li><a href="/users/donhang/">Trang đơn hàng</a></li>
+        <li><a href="/users/logout/">Đăng xuất</a></li>
+      </ol>
+    </div>
+    <div class="col-md-9">
+      <?php
+      include $_Content;
+      ?>
+    </div>
+  </div>
+  <?php
+
+  Functions::Footer();
+  ?>
+  <!--/Footer-->
+  <script src="/public/Eshopper/js/jquery.js"></script>
+  <script src="/public/Eshopper/js/bootstrap.min.js"></script>
+  <script src="/public/Eshopper/js/jquery.scrollUp.min.js"></script>
+  <script src="/public/Eshopper/js/price-range.js"></script>
+  <script src="/public/Eshopper/js/jquery.prettyPhoto.js"></script>
+  <script src="/public/Eshopper/js/main.js"></script>
+  <script src="/public/TinhThanhPho/TinhThanh.js"></script>
+</body>
+
+</html>
+
+<?php
+Functions::DecodeHTML();
+?>

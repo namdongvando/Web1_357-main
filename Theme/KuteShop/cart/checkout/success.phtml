@@ -1,0 +1,28 @@
+<?php
+
+use Model\GioHang;
+
+$gioHang = new GioHang();
+
+?>
+<section id="cart_items">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="#">Trang Chủ</a></li>
+                <li class="active">Đặt hàng thành công</li>
+            </ol>
+        </div>
+        <div class="shopper-informations">
+            <div class="row">
+                <div class="col-sm-12 clearfix">
+                    <?php
+                    echo $gioHang->DatHangThanhCong($data["id"]);
+                    ?>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

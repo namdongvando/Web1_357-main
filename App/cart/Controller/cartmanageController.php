@@ -38,4 +38,9 @@ class cartmanageController extends indexController
 
         $this->View();
     }
+    public function detail()
+    {
+
+        $this->View();
+    }
 }

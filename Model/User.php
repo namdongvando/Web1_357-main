@@ -39,6 +39,18 @@ class User extends DB implements IModelCRUD
         $this->Ward = $item["Ward"] ?? null;
     }
 
+    function Province()
+    {
+        return new TinhThanh($this->Province);
+    }
+    function District()
+    {
+        return new TinhThanh($this->District);
+    }
+    function Ward()
+    {
+        return new TinhThanh($this->Ward);
+    }
     static function CurentUser()
     {
         return $_SESSION["UserLogin"] ?? null;

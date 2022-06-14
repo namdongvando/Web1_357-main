@@ -1,0 +1,121 @@
+<?php
+
+use Model\GioHang;
+use Model\SanPham;
+use Model\Common;
+use Model\FormCommon;
+use Model\User;
+
+$userLogin = User::CurentUser();
+if ($userLogin == null) {
+    Common::ToUrl("/users/");
+}
+?>
+<section id="cart_items">
+    <div class="container">
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href="#">Trang Chủ</a></li>
+                <li class="active">Đặt Hàng</li>
+            </ol>
+        </div>
+
+        <div class="shopper-informations">
+            <div class="row">
+                <form action="" method="post">
+                    <div class="col-sm-5 clearfix">
+                        <div class="bill-to">
+                            <p>Thông Tin giao hàng</p>
+                            <div class=" " style="width: auto;">
+                                <label>Tên người nhận *</label>
+                                <input name="Fullname" value="<?php echo $userLogin["Fullname"] ?>" class="form-control" type="text" placeholder="Tên người nhận *">
+                                <label>SĐT *</label>
+                                <input name="Phone" value="<?php echo $userLogin["Phone"] ?>" class="form-control" type="text" placeholder="SĐT *">
+                                <?php
+                                FormCommon::Province("TinhThanh", $userLogin["Province"], "tinhThanh_checkout", "quanhuyen_checkout")->renderHTML();
+                                FormCommon::District(
+                                    "quanhuyen",
+                                    $userLogin["District"],
+                                    $userLogin["Province"],
+                                    "quanhuyen_checkout"
+                                )->renderHTML();
+                                ?>
+
+                                <label for="diachi">
+                                    Địa chỉ
+                                </label>
+                                <input name="Address" value="<?php echo $userLogin["Address"] ?>" class="form-control" type="text" placeholder="Địa chỉ *">
+
+
+                            </div>
+                            <button style="margin-top: 15px;" class="btn btn-success" onclick="return confirm('bạn có chắc không?');">Đặt hàng</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="order-message">
+                            <p>Ghi Chú</p>
+                            <textarea name="message" placeholder="Ghi chú về đơn đặt hàng của bạn, Ghi chú đặc biệt khi giao hàng" rows="16"></textarea>
+                            <label><input type="checkbox"> Vận chuyển đến địa chỉ thanh toán</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="review-payment">
+            <h2>Danh sách sản phẩm</h2>
+        </div>
+        <div class="table-responsive cart_info">
+            <table class="table table-condensed">
+                <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Sản phẩm</td>
+                        <td class="description"></td>
+                        <td class="price">Giá</td>
+                        <td class="quantity">Số lượng</td>
+                        <td class="total">Thành tiền</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $gioHang = new GioHang();
+                    $DanhSachSanPham = $gioHang->DanhSachSanPham();
+                    foreach ($DanhSachSanPham as $maSanPham => $sanpham) {
+                        $_item = new SanPham($sanpham);
+                    ?>
+                        <tr>
+                            <td class="cart_product" style="margin: 0px;">
+                                <a href=""><img onerror="handleError(this);" style="height: 100px;" src="<?php echo $_item->UrlImages; ?>" alt="<?php echo $_item->Name ?>" /></a>
+                            </td>
+                            <td class="cart_description">
+                                <h4><a href=""><?php echo $_item->Name ?></a></h4>
+                                <p>Web ID: <?php echo $_item->Id ?></p>
+                            </td>
+                            <td class="cart_price">
+                                <p><?php echo $_item->Price() ?></p>
+                            </td>
+                            <td class="cart_quantity">
+                                <div class="cart_quantity_button">
+                                    <a class="cart_quantity_up" href="<?php echo GioHang::LinkThemSoLuong($_item->Id); ?>"> + </a>
+                                    <input class="cart_quantity_input" type="text" name="quantity" value="<?php echo $_item->number ?>" autocomplete="off" size="2" />
+                                    <a class="cart_quantity_down" href="<?php echo GioHang::LinkGiamSoLuong($_item->Id); ?>"> - </a>
+                                </div>
+                            </td>
+                            <td class="cart_total">
+                                <p class="cart_total_price"><?php echo $_item->ThanhTienView() ?></p>
+                            </td>
+                            <td class="cart_delete">
+                                <a class="cart_quantity_delete" href="<?php echo GioHang::LinkXoaSanPham($_item->Id); ?>"><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</section>
+<!--/#cart_items-->

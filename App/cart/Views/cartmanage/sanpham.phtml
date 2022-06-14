@@ -1,0 +1,55 @@
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Danh sách sản phẩm </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Danh sách sản phẩm </li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- SELECT b.`IdProduct`,c.`Name`,SUM(b.`Numbers`) as `TongSoSanPham` FROM `nn_order` as a,`nn_order_detail` as b , `nn_sanpham` as c  WHERE  a.`Id` = b.`IdOrder` AND c.Id=b.`IdProduct` AND a.`Status` = 1
+GROUP BY b.`IdProduct`; -->
+<div class="container-fluid">
+    <div class="card text-left">
+        <div class="card-body">
+            <!-- <ol>
+                <li>Mã </li>
+                <li>Tên </li>
+                <li>SL </li>
+            </ol> -->
+            <table class="table table-border">
+                <tr>
+                    <td>Mã</td>
+                    <td>Tên </td>
+                    <td>Tổng số lượng</td>
+                </tr>
+                <?php
+
+                use Model\ThongKe;
+
+                $modelThongKe = new ThongKe();
+                $sp = $modelThongKe->ThongKeSanPhamDonHang();
+                if ($sp) {
+                    while ($row = $sp->fetch_array()) {
+                        echo <<<HTML
+                <tr>
+                    <td>{$row[0]}</td>
+                    <td>{$row[1]}</td>
+                    <td>{$row[2]}</td>
+                </tr>
+HTML;
+                    }
+                }
+
+                ?>
+            </table>
+
+        </div>
+    </div>
+</div>

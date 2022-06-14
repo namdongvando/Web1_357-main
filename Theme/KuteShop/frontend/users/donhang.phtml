@@ -1,0 +1,76 @@
+<?php
+
+use Model\Common;
+use Model\Order;
+use Model\User;
+
+$order  = new Order();
+$idUser = User::CurentUser()["Id"];
+$totalRows = 0;
+$pageIndex = $_GET["page"] ?? 1;
+$pageNumber = $_GET["number"] ?? 10;
+// kiêm tra trang thứ bao nhieu
+$pageIndex = intval($pageIndex);
+$pageIndex = max($pageIndex, 1);
+// kiểm tra so luong dòng
+$pageNumber = intval($pageNumber);
+$pageNumber = max($pageNumber, 10);
+
+$dsDonHang = $order->GetByUserId(
+    $idUser,
+    $pageIndex,
+    $pageNumber,
+    $totalRows
+);
+
+?>
+<div class="">
+    <h1>Danh Sách Đơn Hàng</h1>
+    <table class="table table-border">
+        <tr>
+            <td>STT</td>
+            <td>Ngày Đăt</td>
+            <td>Họ & Tên</td>
+            <td>SĐT</td>
+            <td>Địa Chỉ</td>
+            <td>Số Sản Phẩm</td>
+            <td>Tổng Tiền</td>
+            <td>Tình Trạng</td>
+            <td>action</td>
+        </tr>
+        <?php
+        $index = 1;
+        while ($rows = $dsDonHang->fetch_assoc()) {
+            $_item = new Order($rows);
+            echo $html = <<<DONHANG
+            <tr>
+                <td>{$index}</td>
+                <td>{$_item->DateCreate}</td>
+                <td>{$_item->User()->Fullname}</td>
+                <td>{$_item->User()->Phone}</td>
+                <td>{$_item->User()->Address}</td>
+                <td>{$_item->CountProduct}</td> 
+                <td>{$_item->TotalPrice}</td>
+                <td>{$_item->Status()->Name}</td>
+                <td>
+                    <a class="btn btn-success" href="/users/donhangdetail/{$_item->Id}" >Xem</a>
+                  
+                </td>
+            </tr>
+
+DONHANG;
+            $index++;
+        }
+        ?>
+
+    </table>
+    <?php
+    $tongTrang = ceil($totalRows / $pageNumber);
+    $linkPhanTrang = "/users/donhang/?page=[i]&number={$pageNumber}";
+    echo Common::PhanTrang(
+        $tongTrang,
+        $pageIndex,
+        $linkPhanTrang
+    );
+    ?>
+</div>

@@ -113,11 +113,22 @@ class Order extends DB implements IModelCRUD
     function GetPaging($params, $pageIndex, $pageNumber, &$totalRows)
     {
         $keyword = $params["keyword"] ?? "";
-        $where = $this->WhereLike("Id", $keyword);
-        return $this->SELECTROWS(
-            self::TableName,
-            $where
-        );
+        $status = $params["status"] ?? "";
+        $fromDate = $params["fromDate"] ?? "";
+        $toDate = $params["toDate"] ?? "";
+        $whereformDate = " 1=1 ";
+        if ($fromDate != "") {
+            $whereformDate = "DateCreate >= '{$fromDate}'";
+        }
+        $wheretoDate = "";
+        if ($toDate != "") {
+            $wheretoDate = "and DateCreate <= '{$toDate}'";
+        }
+        $where = " {$whereformDate} {$wheretoDate} ";
+        $where .= $this->WhereAnd($this->WhereLike("Id", $keyword));
+        $where .= $this->WhereAnd($this->WhereEq("status", $status));
+        // echo $where;
+        return $this->QueryPaging(self::TableName, $where, $pageIndex, $pageNumber, $totalRows);
     }
 
     /**
