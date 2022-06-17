@@ -49,6 +49,8 @@ class checkoutController extends Applications
                     $orderDetail["Price"] = $sp["Price"];
                     $modeOrderDetail->Post($orderDetail);
                 }
+                $gioHang = new GioHang();
+                $gioHang->XoaTatCaGioHang();
                 Common::ToUrl("/cart/checkout/success/{$item["Id"]}");
             } catch (Exception $ex) {
                 // loi

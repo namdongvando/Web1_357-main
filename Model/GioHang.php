@@ -101,7 +101,7 @@ NGUOIMUA;
         $idSP = $sanpham["Id"];
         // kiểm tra xem có sản phẩm chưa?
         if (isset($_SESSION[self::TenGioHang][$idSP])) {
-            $_SESSION[self::TenGioHang][$idSP]["number"]++;
+            $_SESSION[self::TenGioHang][$idSP]["number"] += $sanpham["number"];
             return;
         }
         // thêm mới

@@ -1,0 +1,98 @@
+<?php
+
+use Model\Common;
+use Model\DB;
+use Model\Pages;
+
+$dm = new Pages();
+$totalRows = 0;
+// trang hien tai
+$indexPage = isset($_GET["page"]) ? intval($_GET["page"]) : 1;
+// số dòng trên 1 trang
+$pageNumber = isset($_GET["number"]) ? intval($_GET["number"]) : 10;
+$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
+// echo $keyword;  
+$dataPages = $dm->GetPaging(
+    ["keyword" => $keyword],
+    $indexPage,
+    $pageNumber,
+    $totalRows
+);
+?>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Trang</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Trang</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <form action="/backend/Pages/index/" method="get">
+        <div class="input-group mb-3">
+            <input type="text" value="<?php echo $keyword; ?>" name="keyword" class="form-control" placeholder="từ khoá">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+    <a href="/backend/Pages/post" class="float-right btn btn-primary">Tạo mới</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã </th>
+                <th>Tên</th>
+                <th>Giá</th>
+                <th>Ẩn/Hiện</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if ($dataPages != null) {
+
+                while ($row = $dataPages->fetch_array()) {
+                    $_item = new Pages($row);
+            ?>
+                    <tr>
+                        <td scope="row"><?php echo $_item->Id; ?></td>
+                        <td><?php echo $_item->Name; ?></td>
+                        <td>
+                            <a onclick="return confirm('Bạn có muốn xóa danh mục này không?')" href="/backend/Pages/delete/<?php echo $_item->Id; ?>" class="btn btn-danger">Xóa</a>
+                            <a href="/backend/Pages/put/<?php echo $_item->Id; ?>" class="btn btn-primary">Sửa</a>
+                        </td>
+                    </tr>
+            <?php
+                }
+            }
+            ?>
+
+
+        </tbody>
+    </table>
+
+    <?php
+    $_GET["page"] = isset($_GET["page"]) ? $_GET["page"] : 1;
+    $trangHienTai = intval($_GET["page"]);
+    $trangHienTai = max(1, $trangHienTai);
+    $soTrang = ceil($totalRows / $pageNumber);
+
+    echo Common::PhanTrang(
+        $soTrang,
+        $trangHienTai,
+        "/backend/Pages/index/?page=[i]&number={$pageNumber}"
+    );
+    ?>
+
+</section>
+<!-- /.content -->

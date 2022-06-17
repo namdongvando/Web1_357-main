@@ -50,8 +50,14 @@ class DB extends mysqli
         if (self::$debug == true) {
             echo $sql;
         }
+
         $result = $this->query($sql);
-        if ($result == null) {
+        if (self::$debug == true) {
+            // echo "result_mysql";
+            var_dump($result);
+        }
+
+        if ($result == false) {
             $totalRows = 0;
             return null;
         }

@@ -1,0 +1,53 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/backend/">Trang Chủ</a></li>
+    <li class="breadcrumb-item"><a href="/backend/danhmuc">Trang</a></li>
+    <li class="breadcrumb-item active">Tạo mới</li>
+</ol>
+<section class="content">
+    <div class="card card-primary ">
+        <div class="card-header">
+            <h4 class="card-title">
+                Thêm Trang
+            </h4>
+        </div>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+                <?php
+
+                use Model\Pages\PagesForm;
+
+                $formSanPham = new PagesForm();
+                // $formSanPham->Id()->render();
+                ?>
+                <div class="row">
+                    <div class="col-12">
+                        <?php $formSanPham->Name()->renderHtml();  ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->Keyword()->renderHtml();  ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->Des()->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formSanPham->Lang()->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formSanPham->isDelete()->renderHtml();  ?>
+                    </div>
+                </div>
+                <?php
+                $formSanPham->Content()->renderHtml();
+                $formSanPham->Images()->renderHtml();
+
+                ?>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-success">Thêm</button>
+            </div>
+        </form>
+
+    </div>
+
+
+</section>

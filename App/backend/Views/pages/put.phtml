@@ -1,0 +1,72 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/backend/">Trang Chủ</a></li>
+    <li class="breadcrumb-item"><a href="/backend/sanpham">Sản Phẩm</a></li>
+    <li class="breadcrumb-item active">Sửa</li>
+</ol>
+<section class="content">
+    <div class="card card-primary ">
+        <div class="card-header">
+            <h4 class="card-title">
+                Sửa Sản Phẩm
+            </h4>
+        </div>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="card-body">
+                <?php
+
+                use Model\SanPham;
+
+                $sanPham = new SanPham($data["Id"]);
+
+                use Model\SanPhamForm;
+
+                $formSanPham = new SanPhamForm();
+                // $formSanPham->Id()->render();
+                ?>
+                <div class="row">
+                    <div class="col-6">
+                        <?php $formSanPham->Id($sanPham->Id)->render();  ?>
+                        <?php $formSanPham->Code($sanPham->Code)->renderHtml();  ?>
+                    </div>
+                    <div class="col-6">
+                        <?php $formSanPham->Name($sanPham->Name)->renderHtml();  ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->Price($sanPham->Price)->renderHtml(); ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->SalePrice($sanPham->SalePrice)->renderHtml();  ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->IdDM($sanPham->IdDM)->renderHtml(); ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->Keyword($sanPham->Keyword)->renderHtml();  ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->Decription($sanPham->Decription)->renderHtml();  ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formSanPham->Title($sanPham->Title)->renderHtml(); ?>
+                    </div>
+
+                </div>
+                <?php
+                $formSanPham->Content($sanPham->Content())->renderHtml();
+                ?>
+                <img style="height: 100px;" src="<?php echo $sanPham->UrlImages; ?>" alt="">
+                <?php
+                $formSanPham->UrlImages()->renderHtml();
+                $formSanPham->Active($sanPham->Active)->renderHtml();
+
+                ?>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-success">Lưu</button>
+            </div>
+        </form>
+
+    </div>
+
+
+</section>

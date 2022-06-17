@@ -1,0 +1,47 @@
+<?php
+$sanPham = $data["product"];
+
+?>
+<div class="product-details">
+    <!--product-details-->
+    <div class="col-sm-5">
+        <div class="view-product">
+            <img onerror="this.src='/public/no-image.jpg'" src="<?php echo $sanPham->UrlImages ?>" alt="" />
+        </div>
+
+    </div>
+    <div class="col-sm-7">
+        <div class="product-information">
+            <img src="/public/Eshopper/images/product-details/new.jpg" class="newarrival" alt="" />
+            <h2><?php echo $sanPham->Name ?></h2>
+            <p>Mã hàng: <?php echo $sanPham->Code ?></p>
+            <div style="color: goldenrod;">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half"></i>
+            </div>
+
+            <span>
+                <!-- // tạo form để submit sản phẩm muốn mua -->
+                <form action="/cart/index/AddToCart" method="POST">
+                    <span><?php echo $sanPham->Price(); ?></span>
+                    <label>Số lượng:</label>
+
+                    <input type="hidden" name="id" value="<?php echo $sanPham->Id; ?>" />
+                    <input type="number" name="num" value="1" />
+                    <button type="submit" class="btn btn-fefault cart">
+                        <i class="fa fa-shopping-cart"></i>
+                        Thêm giỏ hàng
+                    </button>
+                </form>
+
+            </span>
+            <p><b>Tình Trạng:</b> New</p>
+        </div>
+    </div>
+</div>

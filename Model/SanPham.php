@@ -43,6 +43,11 @@ class SanPham extends DB implements IModelCRUD
         $this->Active = isset($sp["Active"]) ? $sp["Active"] : null;
         $this->number = $sp["number"] ?? 0;
     }
+
+    function LinkChiTiet()
+    {
+        return "/index/sanpham/" . $this->Id;
+    }
     public function ThanhTien()
     {
         return $this->Price * $this->number;

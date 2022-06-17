@@ -21,6 +21,27 @@ class indexController extends Applications
     {
         $this->View();
     }
+
+    public function AddToCart()
+    {
+        $idSanPham = $_REQUEST["id"] ?? null;
+        $soLuong = $_REQUEST["num"] ?? 0;
+        $soLuong = max(1, $soLuong);
+        $modelSanPham = new SanPham();
+        $sp = $modelSanPham->GetById($idSanPham);
+        if ($sp == null) {
+            // nếu không có sản phẩm thì quay lại trang trước
+            Common::ToUrl($_SERVER["HTTP_REFERER"]);
+            // kết thúc
+            return;
+        }
+        // số lượng 1
+        $sp["number"] = $soLuong;
+        $giohang = new GioHang();
+        $giohang->ThemGioHang($sp);
+        Common::ToUrl($_SERVER["HTTP_REFERER"]);
+    }
+
     public function add()
     {
         $giohang = new GioHang();
