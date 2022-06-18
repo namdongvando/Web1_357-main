@@ -21,7 +21,6 @@ class Pages extends DB implements IModelCRUD
 
     function __construct($item = null)
     {
-        parent::__construct();
         if (is_array($item) == false) {
             $id = $item;
             $item = $this->GetById($id);

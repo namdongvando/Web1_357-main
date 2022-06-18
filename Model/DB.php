@@ -2,17 +2,26 @@
 
 namespace Model;
 
+use Exception;
 use mysqli;
 
 class DB extends mysqli
 {
     public static $debug = false;
-
+    public static $DbConnect;
     function __construct()
     {
-        $this->connect("localhost", "root", "", "banhang");
-        // chuyển qua tiếng việt
-        $this->set_charset("utf8");
+        if (self::$DbConnect == null) {
+            $this->ConnectDB();
+        }
+    }
+
+    public function ConnectDB()
+    {
+        if (self::$DbConnect == null) {
+            self::$DbConnect =  new  mysqli("localhost", "root", "", "banhang");
+            self::$DbConnect->set_charset("utf8");
+        }
     }
 
     public function GetByQuery($sql)
@@ -20,7 +29,7 @@ class DB extends mysqli
         // câu lệnh truy  vấn mysql
         //$sql = "SELECT * FROM `nn_danhmuc` WHERE 1";    
 
-        $result = $this->query($sql);
+        $result = self::$DbConnect->query($sql);
         if ($result) {
             return $result;
         }
@@ -34,7 +43,7 @@ class DB extends mysqli
         } //" `id` = '10' "; 
         echo $sql = "DELETE FROM `{$tableName}` WHERE {$where}";
 
-        return $this->query($sql);
+        return self::$DbConnect->query($sql);
     }
     function QueryPaging($tableName, $where, $pageIndex, $pageNumber, &$totalRows, $colums = null)
     {
@@ -50,8 +59,7 @@ class DB extends mysqli
         if (self::$debug == true) {
             echo $sql;
         }
-
-        $result = $this->query($sql);
+        $result = self::$DbConnect->query($sql);
         if (self::$debug == true) {
             // echo "result_mysql";
             var_dump($result);
@@ -69,8 +77,7 @@ class DB extends mysqli
         $totalRows = $result->num_rows;
         $start = ($pageIndex - 1) * $pageNumber;
         $sql = $sql . " limit {$start},{$pageNumber}";
-
-        return $this->query($sql);
+        return self::$DbConnect->query($sql);
     }
 
     public function WhereEq($columname, $value)
@@ -105,7 +112,8 @@ class DB extends mysqli
         if (self::$debug == true) {
             echo $sql;
         }
-        return $this->query($sql);
+
+        return self::$DbConnect->query($sql);
     }
     public function UPDATE($tableName, $data, $where)
     {
@@ -120,12 +128,12 @@ class DB extends mysqli
         if (self::$debug == true) {
             echo $sql;
         }
-        return $this->query($sql);
+        return self::$DbConnect->query($sql);
     }
     function SELECTROW($tableName, $where)
     {
         $sql = "SELECT * FROM `{$tableName}` WHERE {$where}";
-        $result = $this->query($sql);
+        $result = self::$DbConnect->query($sql);
         if ($result == false)
             return null;
         if ($result->num_rows > 0) {
@@ -139,7 +147,7 @@ class DB extends mysqli
         if (self::$debug == true) {
             echo $sql;
         }
-        $result = $this->query($sql);
+        $result = self::$DbConnect->query($sql);
         if ($result->num_rows > 0) {
             return $result;
         }
@@ -148,7 +156,7 @@ class DB extends mysqli
     function DELETEDB($tableName, $where)
     {
         $sql = "DELETE FROM `{$tableName}` WHERE {$where}";
-        $result = $this->query($sql);
+        $result = self::$DbConnect->query($sql);
         return $result;
     }
     // lấy du liệu và chuyển qua dang [[Key=>value],[Key=>value]]

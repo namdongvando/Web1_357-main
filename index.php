@@ -4,6 +4,7 @@
 // error_reporting(0);
 
 use Model\Common;
+use Model\DB;
 
 session_start();
 ob_start();
@@ -12,6 +13,7 @@ spl_autoload_register(function ($className) {
     //echo  "____" . $className . "____";
     include_once(__DIR__ . "/{$className}.php");
 });
+new DB();
 // set loại tiền tệ
 Common::$TypeMoney = $_SESSION["TypeMoney"] ?? Common::MoneyVND;
 //  tat ca request phai chay qua file này
