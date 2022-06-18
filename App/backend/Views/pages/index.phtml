@@ -18,6 +18,7 @@ $dataPages = $dm->GetPaging(
     $pageNumber,
     $totalRows
 );
+
 ?>
 <section class="content-header">
     <div class="container-fluid">
@@ -52,8 +53,7 @@ $dataPages = $dm->GetPaging(
             <tr>
                 <th>Mã </th>
                 <th>Tên</th>
-                <th>Giá</th>
-                <th>Ẩn/Hiện</th>
+                <th>Ẩn Hiện</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -67,6 +67,7 @@ $dataPages = $dm->GetPaging(
                     <tr>
                         <td scope="row"><?php echo $_item->Id; ?></td>
                         <td><?php echo $_item->Name; ?></td>
+                        <td><?php echo $_item->isDelete; ?></td>
                         <td>
                             <a onclick="return confirm('Bạn có muốn xóa danh mục này không?')" href="/backend/Pages/delete/<?php echo $_item->Id; ?>" class="btn btn-danger">Xóa</a>
                             <a href="/backend/Pages/put/<?php echo $_item->Id; ?>" class="btn btn-primary">Sửa</a>

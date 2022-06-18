@@ -1,68 +1,55 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/backend/">Trang Chủ</a></li>
-    <li class="breadcrumb-item"><a href="/backend/sanpham">Sản Phẩm</a></li>
+    <li class="breadcrumb-item"><a href="/backend/pages">Trang</a></li>
     <li class="breadcrumb-item active">Sửa</li>
 </ol>
 <section class="content">
     <div class="card card-primary ">
         <div class="card-header">
             <h4 class="card-title">
-                Sửa Sản Phẩm
+                Sửa Trang
             </h4>
         </div>
         <form action="" method="post" enctype="multipart/form-data">
             <div class="card-body">
                 <?php
 
-                use Model\SanPham;
+                use Model\Pages;
+                use Model\Pages\PagesForm;
 
-                $sanPham = new SanPham($data["Id"]);
+                $formPages = new PagesForm();
 
-                use Model\SanPhamForm;
+                $pagesDetail = new Pages($_Params[0]);
 
-                $formSanPham = new SanPhamForm();
-                // $formSanPham->Id()->render();
+                $formPages->Id($pagesDetail->Id)->render();
                 ?>
                 <div class="row">
+                    <div class="col-12">
+                        <?php $formPages->Name($pagesDetail->Name)->renderHtml();  ?>
+                        <?php $formPages->Alias($pagesDetail->Alias)->renderHtml();  ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formPages->Keyword($pagesDetail->Keyword)->renderHtml();  ?>
+                    </div>
+                    <div class="col-4">
+                        <?php $formPages->Des($pagesDetail->Des)->renderHtml();  ?>
+                    </div>
                     <div class="col-6">
-                        <?php $formSanPham->Id($sanPham->Id)->render();  ?>
-                        <?php $formSanPham->Code($sanPham->Code)->renderHtml();  ?>
+                        <?php $formPages->Lang($pagesDetail->Lang)->renderHtml();  ?>
                     </div>
                     <div class="col-6">
-                        <?php $formSanPham->Name($sanPham->Name)->renderHtml();  ?>
+                        <?php $formPages->isDelete($pagesDetail->isDelete)->renderHtml();  ?>
                     </div>
-                    <div class="col-4">
-                        <?php $formSanPham->Price($sanPham->Price)->renderHtml(); ?>
-                    </div>
-                    <div class="col-4">
-                        <?php $formSanPham->SalePrice($sanPham->SalePrice)->renderHtml();  ?>
-                    </div>
-                    <div class="col-4">
-                        <?php $formSanPham->IdDM($sanPham->IdDM)->renderHtml(); ?>
-                    </div>
-                    <div class="col-4">
-                        <?php $formSanPham->Keyword($sanPham->Keyword)->renderHtml();  ?>
-                    </div>
-                    <div class="col-4">
-                        <?php $formSanPham->Decription($sanPham->Decription)->renderHtml();  ?>
-                    </div>
-                    <div class="col-4">
-                        <?php $formSanPham->Title($sanPham->Title)->renderHtml(); ?>
-                    </div>
-
                 </div>
                 <?php
-                $formSanPham->Content($sanPham->Content())->renderHtml();
+                $formPages->Content($pagesDetail->Content())->renderHtml();
+                $formPages->Images($pagesDetail->Images)->renderHtml();
                 ?>
-                <img style="height: 100px;" src="<?php echo $sanPham->UrlImages; ?>" alt="">
-                <?php
-                $formSanPham->UrlImages()->renderHtml();
-                $formSanPham->Active($sanPham->Active)->renderHtml();
-
-                ?>
+                <input onclick="BrowseServer('Images:/', 'Select_Images_Server')" type="button" id="btnChonFile" value="Chọn Hình">
+                <img style="width: 100px;height: 100px;" src="<?php echo $pagesDetail->Images; ?>" alt="">
             </div>
             <div class="card-footer">
-                <button class="btn btn-success">Lưu</button>
+                <button class="btn btn-success">Sửa</button>
             </div>
         </form>
 

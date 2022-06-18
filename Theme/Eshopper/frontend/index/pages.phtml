@@ -1,0 +1,12 @@
+<?php
+$pages = $data["Pages"];
+?>
+<div class="product-details">
+    <!--product-details-->
+    <h1><?php
+        echo $pages->Name;
+        ?></h1>
+    <?php
+    echo $pages->Content();
+    ?>
+</div>

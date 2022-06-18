@@ -144,7 +144,8 @@ class PagesForm implements IPagesForm
         $lable = "Hình đại diện";
         $properties["placeholder"] = $lable;
         $properties["value"] = $val;
-        return new FormRender(new File($lable, $name, $properties));
+        $properties["id"] =  "Select_Images_Server";
+        return new FormRender(new Textbox($lable, $name, $properties));
     }
 
     /**

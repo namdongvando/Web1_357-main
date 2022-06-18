@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/backend/">Trang Chủ</a></li>
-    <li class="breadcrumb-item"><a href="/backend/danhmuc">Trang</a></li>
+    <li class="breadcrumb-item"><a href="/backend/pages">Trang</a></li>
     <li class="breadcrumb-item active">Tạo mới</li>
 </ol>
 <section class="content">
@@ -36,11 +36,12 @@
                         <?php $formSanPham->isDelete()->renderHtml();  ?>
                     </div>
                 </div>
+
                 <?php
                 $formSanPham->Content()->renderHtml();
                 $formSanPham->Images()->renderHtml();
-
                 ?>
+                <input onclick="BrowseServer('Images:/sanpham/', 'Select_Images_Server')" type="button" id="btnChonFile" value="Chọn Hình">
             </div>
             <div class="card-footer">
                 <button class="btn btn-success">Thêm</button>

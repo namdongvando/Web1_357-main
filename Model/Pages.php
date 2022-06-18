@@ -38,6 +38,11 @@ class Pages extends DB implements IModelCRUD
         $this->User = $item["User"] ?? null;
         $this->isDelete = $item["isDelete"] ?? 1;
     }
+
+    public function Content()
+    {
+        return htmlspecialchars_decode($this->Content);
+    }
     /**
      *
      * @param mixed $item
@@ -80,6 +85,7 @@ class Pages extends DB implements IModelCRUD
      */
     function GetById($id)
     {
+        return $this->SELECTROW(self::tableName, $this->WhereEq("Id", $id));
     }
 
     /**

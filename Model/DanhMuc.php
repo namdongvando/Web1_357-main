@@ -9,6 +9,8 @@ class DanhMuc extends DB implements IModelCRUD
 	public $Decription;
 	public $IsDelete;
 
+	const tableName = "nn_danhmuc";
+
 	function __construct($item = null)
 	{
 		$this->Id = isset($item["Id"]) ? $item["Id"] : null;
@@ -38,13 +40,7 @@ class DanhMuc extends DB implements IModelCRUD
 	 */
 	function Post($item)
 	{
-		$sql = "INSERT INTO `nn_danhmuc` 
-        (`Id`, `Name`, `Decription`, `IsDelete`) 
-        VALUES (NULL, 
-        '{$item["Name"]}', 
-        '{$item["Decription"]}', 
-        '{$item["IsDelete"]}')";
-		return $this->query($sql);
+		return $this->INSERT(self::tableName, $item);
 	}
 
 	/**
@@ -55,12 +51,11 @@ class DanhMuc extends DB implements IModelCRUD
 	 */
 	function Put($item)
 	{
-		$sql = "UPDATE `nn_danhmuc` SET  
-		`Name`='{$item["Name"]}',
-		`Decription`='{$item["Decription"]}'
-		,`IsDelete`='{$item["IsDelete"]}' 
-		WHERE `Id`  = {$item["Id"]}";
-		$this->query($sql);
+		return $this->UPDATE(
+			self::tableName,
+			$item,
+			$this->WhereEq("Id", $item["Id"])
+		);
 	}
 
 	/**
@@ -69,7 +64,7 @@ class DanhMuc extends DB implements IModelCRUD
 	 */
 	function Get()
 	{
-		return $this->SELECTROWS("nn_danhmuc", "1=1");
+		return $this->SELECTROWS(self::tableName, "1=1");
 	}
 
 	/**
@@ -86,23 +81,10 @@ class DanhMuc extends DB implements IModelCRUD
 		$pageNumber,
 		&$totalRows
 	) {
-		$keyword = isset($params["keyword"])
-			? $params["keyword"] : '';
-		// cau lenh truy van
-		$sql = "SELECT * FROM 
-		`nn_danhmuc` WHERE `Name` like '%{$keyword}%' or
-		`Id` like '%{$keyword}%'";
-		$result = $this->query($sql);
-		// var_dump($result);
-		if ($result) {
-			// to so dong tra ve
-			$totalRows = $result->num_rows;
-		}
-		// tinh vi tri cac dong cần tra ve
-		$start = ($pageIndex - 1) * $pageNumber;
-		// lấy các dòng
-		$sql .= " limit {$start}, $pageNumber";
-		return $this->query($sql);
+		$keyword = $params["keyword"] ?? "";
+		$where = $this->WhereLike("Name", $keyword);
+		// DB::$debug = true;
+		return $this->QueryPaging(self::tableName, $where, $pageIndex, $pageNumber, $totalRows);
 	}
 
 	/**
@@ -113,9 +95,7 @@ class DanhMuc extends DB implements IModelCRUD
 	 */
 	function Delete($id)
 	{
-		$sql = "UPDATE `nn_danhmuc` SET 
-		`IsDelete`='1' WHERE `Id` = {$id}";
-		$this->query($sql);
+		return $this->DELETEDB(self::tableName, $this->WhereEq("Id", $id));
 	}
 
 	/**
@@ -135,12 +115,7 @@ class DanhMuc extends DB implements IModelCRUD
 	 */
 	function GetById($id)
 	{
-		$sql = "SELECT * FROM `nn_danhmuc` WHERE `Id` = {$id} ";
-		$result = $this->query($sql);
-		if ($result->num_rows > 0) {
-			return $result->fetch_assoc();
-		}
-		return null;
+		return $this->SELECTROW(self::tableName, $this->WhereEq("Id", $id));
 	}
 	public function IsDelete()
 	{

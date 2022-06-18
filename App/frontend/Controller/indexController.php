@@ -4,6 +4,7 @@ namespace App\frontend\Controller;
 
 use Applications;
 use Model\Common;
+use Model\Pages;
 use Model\SanPham;
 use Model\Setting;
 
@@ -27,6 +28,12 @@ class indexController extends Applications
     {
         $sp = new SanPham($this->getParams(0));
         $this->View(["product" => $sp]);
+    }
+    public function pages()
+    {
+        $sp = new Pages($this->getParams(0));
+        // var_dump($sp->Content());
+        $this->View(["Pages" => $sp]);
     }
     // /index/setmoney/[Loại tiền tệ]
     function setmoney()
