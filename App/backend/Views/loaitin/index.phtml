@@ -1,0 +1,7 @@
+<script src="/public/App/MyApp.js" type="module"></script>
+<div ng-app="myApp" ng-controller="loaiTin">
+    <label>{{FullName}}</label>
+    <input type="text" class="form-control" ng-model="FullName">
+    <div ng-repeat="item in LoaiTinData.data">{{item.Name}}</div>
+
+</div>
