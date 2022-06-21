@@ -61,7 +61,7 @@ class Admin extends DB implements IModelCRUD
         `District` = '{$user["District"]}', 
         `Ward` = '{$user["Ward"]}' 
         WHERE  `Id` = '{$user["Id"]}'";
-        $result = $this->query($sql);
+        $result = self::$DbConnect->query($sql);
         return $result;
     }
 
@@ -77,6 +77,7 @@ class Admin extends DB implements IModelCRUD
     {
         $sql = "SELECT * FROM `nn_admin` WHERE `Username` = '{$username}' and `Password` = '{$password}'";
         $result = $this->GetByQuery($sql);
+
         if ($result == null) {
             return null;
         }
@@ -106,7 +107,7 @@ class Admin extends DB implements IModelCRUD
             '{$item["Province"]}', 
             '{$item["District"]}', 
             '{$item["Ward"]}')";
-        return $this->query($sql);
+        return self::$DbConnect->query($sql);
     }
 
     /**
@@ -127,7 +128,7 @@ class Admin extends DB implements IModelCRUD
 `Province`='{$item["Province"]}',
 `District`='{$item["District"]}',
 `Ward`='{$item["Ward"]}' WHERE `Id`='{$item["Id"]}'";
-        return $this->query($sql);
+        return self::$DbConnect->query($sql);
     }
 
     /**
@@ -147,7 +148,7 @@ class Admin extends DB implements IModelCRUD
     function GetById($id)
     {
         $sql = "SELECT * FROM `nn_admin` WHERE `Id` = {$id}";
-        $result = $this->query($sql);
+        $result = self::$DbConnect->query($sql);
         if ($result == null)
             return null;
         if ($result->num_rows > 0) {

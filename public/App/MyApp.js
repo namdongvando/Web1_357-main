@@ -1,8 +1,15 @@
+import LoaiTinController from "./LoaiTin/LoaiTinController.js";
+import templatePhanTrang from "./PhanTrangTemplate.js";
+
 var app = angular.module("myApp", []);
-app.controller("loaiTin", async function ($scope, $http) {
-  $scope.FullName = "abc";
-  await $http.get("/backend/loaitin/getLoaiTin").then(function (res) {
-    console.log(res.data);
-    $scope.LoaiTinData = res.data;
-  });
+
+app.directive("phanTrang", function () {
+  return {
+    template: templatePhanTrang,
+    scope: {
+      pageTotal: "@",
+      pagesIndex: "@",
+    },
+  };
 });
+app.controller("loaiTin", LoaiTinController);

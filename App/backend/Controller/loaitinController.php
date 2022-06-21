@@ -6,6 +6,7 @@ use App\IController;
 use Model\Admin;
 use Model\Common;
 use Model\DB;
+use Model\LoaiTin;
 use Model\Pages\PagesForm;
 use Model\Pages;
 use PFBC\Element\Date;
@@ -25,6 +26,23 @@ class loaitinController extends indexController implements IController
     {
         $this->View();
     }
+
+    public function postapi()
+    {
+        $postInput = file_get_contents("php://input");
+        $postInput = json_decode($postInput, JSON_OBJECT_AS_ARRAY);
+        $Name  = $postInput["Name"];
+        $Description  = $postInput["Description"];
+        $Parents  = $postInput["Parents"];
+
+        $loaiTin = new LoaiTin();
+        $item["Name"] = $Name;
+        $item["Description"] = $Description;
+        $item["Parents"] = $Parents;
+        $result =   $loaiTin->Post($item);
+        var_dump($result);
+    }
+
     /**
      *
      * @return mixed
@@ -141,10 +159,10 @@ class loaitinController extends indexController implements IController
 
     public function getLoaiTin()
     {
-        $params = $_REQUEST["keyword"] ?? "";
+        $params["keyword"] = $_REQUEST["keyword"] ?? "";
         $pagesIndex = $_REQUEST["pagesIndex"] ?? 1;
         $pagesNumber = $_REQUEST["pagesNumber"] ?? 10;
-        $page = new Pages();
+        $page = new LoaiTin();
         $pages = $page->GetPaging(
             $params,
             $pagesIndex,
@@ -157,10 +175,11 @@ class loaitinController extends indexController implements IController
         $a["pagesNumber"] = $pagesNumber;
         $a["totalRows"] = $totalRows;
         $a["data"] = [];
-        while ($row =  $pages->fetch_assoc()) {
-            unset($row["Content"]);
-            $a["data"][] = $row;
-        }
+        if ($pages)
+            while ($row =  $pages->fetch_assoc()) {
+                unset($row["Content"]);
+                $a["data"][] = $row;
+            }
 
         echo json_encode($a, JSON_UNESCAPED_UNICODE);
     }

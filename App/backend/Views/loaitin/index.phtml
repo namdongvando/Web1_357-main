@@ -1,7 +1,101 @@
 <script src="/public/App/MyApp.js" type="module"></script>
-<div ng-app="myApp" ng-controller="loaiTin">
-    <label>{{FullName}}</label>
-    <input type="text" class="form-control" ng-model="FullName">
-    <div ng-repeat="item in LoaiTinData.data">{{item.Name}}</div>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Loại Tin</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Loại Tin</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container" ng-app="myApp" ng-controller="loaiTin">
+    <div class=" form-inline">
+        <input type="text" class="form-control" ng-model="keyword">
+        <button ng-click="GetPaging()" class="btn btn-primary">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+    </div>
 
+    <table class="table table-border">
+        <tr>
+            <td>Stt</td>
+            <td>Tên</td>
+            <td>Tên không dấu</td>
+            <td>Thuộc loại tin</td>
+            <td>
+                <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#modelId">
+                    Tạo mới
+                </button>
+            </td>
+        </tr>
+        <tr ng-repeat="item in LoaiTinData.data">
+            <td>{{$index+1}}</td>
+            <td>{{item.Name}}</td>
+            <td>{{item.Alias}}</td>
+            <td>{{item.Parents}}</td>
+            <td>
+                <button type="button" class="btn btn-primary">Sửa</button>
+                <button type="button" class="btn btn-danger">Xóa</button>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Button trigger modal -->
+    <phan-trang pageTotal="1" pagesIndex={LoaiTinData.pagesIndex}></phan-trang>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tạo mới</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <!-- dòng -->
+                        <div class="form-group">
+                            <label>Tên Loại Tin</label>
+                            <input type="text" ng-model="PostModel.Name" name="Id" class="form-control" placeholder="Mã Loại Tin" aria-describedby="helpId">
+
+                        </div>
+                        <!-- dòng -->
+                        <!-- dòng -->
+                        <div class="form-group">
+                            <label>Mô tả</label>
+                            <textarea type="text" ng-model="PostModel.Description" name="Id" class="form-control" placeholder="Mô tả" aria-describedby="helpId"></textarea>
+                        </div>
+                        <!-- dòng -->
+                        <!-- dòng -->
+                        <div class="form-group">
+                            <label>Thuôc loại tin</label>
+                            <select ng-model="PostModel.Parents" class="form-control">
+                                <option value="0">Chọn Loại Tin</option>
+                            </select>
+                        </div>
+                        <!-- dòng -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                    <button ng-click="LoaiTinPost()" type="button" class="btn btn-primary">Thêm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script>
+        $('#exampleModal').on('show.bs.modal', event => {
+            var button = $(event.relatedTarget);
+            var modal = $(this);
+        });
+    </script> -->
 </div>

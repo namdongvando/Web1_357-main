@@ -130,8 +130,9 @@ class DB extends mysqli
         }
         return self::$DbConnect->query($sql);
     }
-    function SELECTROW($tableName, $where)
+    function SELECTROW($tableName = null, $where)
     {
+
         $sql = "SELECT * FROM `{$tableName}` WHERE {$where}";
         $result = self::$DbConnect->query($sql);
         if ($result == false)
