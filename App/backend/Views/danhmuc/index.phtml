@@ -44,6 +44,8 @@ $dataDanhMuc = $dm->GetPaging([], $indexPage, $pageNumber, $totalRows);
         </div>
     </form>
     <a href="/backend/danhmuc/post" class="float-right btn btn-primary">Tạo mới</a>
+    <a href="/backend/danhmuc/import" class="float-right btn btn-success">Import</a>
+    <a href="/backend/danhmuc/export" class="float-right btn btn-success">Export</a>
     <table class="table">
         <thead>
             <tr>
@@ -56,10 +58,10 @@ $dataDanhMuc = $dm->GetPaging([], $indexPage, $pageNumber, $totalRows);
         </thead>
         <tbody>
             <?php
-if ($dataDanhMuc != null) {
-    while ($row = $dataDanhMuc->fetch_array()) {
-        $_item = new DanhMuc($row);
-?>
+            if ($dataDanhMuc != null) {
+                while ($row = $dataDanhMuc->fetch_array()) {
+                    $_item = new DanhMuc($row);
+            ?>
                     <tr>
                         <td scope="row"><?php echo $_item->Id; ?></td>
                         <td><?php echo $_item->Name; ?></td>
@@ -71,26 +73,26 @@ if ($dataDanhMuc != null) {
                         </td>
                     </tr>
             <?php
-    }
-}
-?>
- 
+                }
+            }
+            ?>
+
 
         </tbody>
     </table>
 
     <?php
-$_GET["page"] = isset($_GET["page"]) ? $_GET["page"] : 1;
-$trangHienTai = intval($_GET["page"]);
-$trangHienTai = max(1, $trangHienTai);
-$soTrang = ceil($totalRows / $pageNumber);
+    $_GET["page"] = isset($_GET["page"]) ? $_GET["page"] : 1;
+    $trangHienTai = intval($_GET["page"]);
+    $trangHienTai = max(1, $trangHienTai);
+    $soTrang = ceil($totalRows / $pageNumber);
 
-echo Common::PhanTrang(
-    $soTrang,
-    $trangHienTai,
-    "/backend/danhmuc/index/?page=[i]&number={$pageNumber}"
-);
-?>
+    echo Common::PhanTrang(
+        $soTrang,
+        $trangHienTai,
+        "/backend/danhmuc/index/?page=[i]&number={$pageNumber}"
+    );
+    ?>
 
 </section>
 <!-- /.content -->

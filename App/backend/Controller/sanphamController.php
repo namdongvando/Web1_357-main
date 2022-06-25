@@ -9,6 +9,7 @@ use Model\SanPhamForm;
 use PFBC\Validation;
 use PFBC\Validation\Required;
 use PHPMailer\PHPMailer\Exception;
+use Model\ExcelConfig;
 
 class sanphamController extends indexController implements IController
 {
@@ -161,5 +162,18 @@ class sanphamController extends indexController implements IController
      */
     function trash()
     {
+    }
+    function export()
+    {
+        $sanPham = new SanPham();
+        $totalRow = 0;
+        $datarow = $sanPham->GetPaging([], 1, 10000, $totalRow);
+        echo $totalRow;
+        $data[0] = ["Id", "Code", "IdDM", "Name", "Decription", "Price", "Keyword", "Title", "Content", "UrlImages", "SalePrice", "Active"];
+        while ($row = $datarow->fetch_assoc()) {
+            $data[] = $row;
+        }
+        // var_dump($data);
+        ExcelConfig::Export($data, "public/sanPham.Xlsx");
     }
 }

@@ -1,5 +1,5 @@
 const LoaiTinController = async ($scope, $http) => {
-  $scope.keyword = "abc";
+  $scope.keyword = "";
   $scope.PostModel = {
     Name: "abc",
     Description: "abc",
@@ -9,6 +9,18 @@ const LoaiTinController = async ($scope, $http) => {
     console.log(res.data);
     $scope.LoaiTinData = res.data;
   });
+  $scope.GetPagingParams = (indexPages, pagesNumber) => {
+    var param = { pagesIndex: indexPages, pagesNumber: pagesNumber };
+    param["keyword"] = $scope.keyword;
+    $http
+      .get("/backend/loaitin/getLoaiTin/", {
+        params: param,
+      })
+      .then(function (res) {
+        $scope.LoaiTinData = res.data;
+      });
+  };
+
   $scope.GetPaging = () => {
     var param = $scope.LoaiTinData;
     param["keyword"] = $scope.keyword;

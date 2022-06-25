@@ -174,6 +174,7 @@ class loaitinController extends indexController implements IController
         $a["pagesIndex"] = $pagesIndex;
         $a["pagesNumber"] = $pagesNumber;
         $a["totalRows"] = $totalRows;
+        $a["totalPage"] = ceil($totalRows / $pagesNumber);
         $a["data"] = [];
         if ($pages)
             while ($row =  $pages->fetch_assoc()) {

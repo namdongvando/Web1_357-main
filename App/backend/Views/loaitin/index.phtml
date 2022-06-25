@@ -47,9 +47,7 @@
     </table>
 
     <!-- Button trigger modal -->
-    <phan-trang pageTotal="1" pagesIndex={LoaiTinData.pagesIndex}></phan-trang>
-
-
+    <phan-trang on-click="GetPagingParams(indexPages, pagesNumber)" total-page="LoaiTinData.totalPage" pages-index="LoaiTinData.pagesIndex"></phan-trang>
     <!-- Modal -->
     <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">

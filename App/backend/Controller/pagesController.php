@@ -6,6 +6,7 @@ use App\IController;
 use Model\Admin;
 use Model\Common;
 use Model\DB;
+use Model\ExcelConfig;
 use Model\Pages\PagesForm;
 use Model\Pages;
 use PFBC\Element\Date;
@@ -136,5 +137,17 @@ class pagesController extends indexController implements IController
      */
     function trash()
     {
+    }
+    function export()
+    {
+        $sanPham = new Pages();
+        $totalRow = 0;
+        $datarow = $sanPham->GetPaging([], 1, 10000, $totalRow);
+        $data[0] = ["Id", "Name", "Des", "Keyword", "Alias", "Content", "Lang", "Images", "RecCreateDate", "RecUpdateDate", "User", "isDelete"];
+        while ($row = $datarow->fetch_assoc()) {
+            $data[] = $row;
+        }
+
+        ExcelConfig::Export($data, "public/pages.Xlsx");
     }
 }
