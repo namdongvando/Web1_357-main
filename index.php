@@ -5,6 +5,7 @@
 
 use Model\Common;
 use Model\DB;
+use Model\Mail\PhpMail;
 
 session_start();
 ob_start();
@@ -13,6 +14,8 @@ spl_autoload_register(function ($className) {
     //echo  "____" . $className . "____";
     include_once(__DIR__ . "/{$className}.php");
 });
+PhpMail::$Password = "tucauhinh";
+PhpMail::$Username = "tucauhinh";
 new DB();
 // set loại tiền tệ
 Common::$TypeMoney = $_SESSION["TypeMoney"] ?? Common::MoneyVND;
