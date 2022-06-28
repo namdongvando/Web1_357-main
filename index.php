@@ -12,6 +12,7 @@ ob_start();
 include "./vendor/autoload.php";
 spl_autoload_register(function ($className) {
     //echo  "____" . $className . "____";
+    $className = str_replace("\\", "/", $className);
     include_once(__DIR__ . "/{$className}.php");
 });
 // mat khau: hnibhmpqmrwvweht
