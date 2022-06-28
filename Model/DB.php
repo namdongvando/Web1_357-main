@@ -19,7 +19,12 @@ class DB extends mysqli
     public function ConnectDB()
     {
         if (self::$DbConnect == null) {
-            self::$DbConnect =  new  mysqli("localhost", "root", "", "banhang");
+            self::$DbConnect =  new  mysqli(
+                "localhost",
+                "oetkpjhosting_donv",
+                "zaq!@#wsx",
+                "oetkpjhosting_donv"
+            );
             self::$DbConnect->set_charset("utf8");
         }
     }
