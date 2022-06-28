@@ -1,4 +1,22 @@
-RewriteEngine On
-RewriteRule public - [L]
-# tất cả request phải chạy qua file php
-RewriteRule (.*) index.php [R=301,L]
+RewriteEngine on
+RewriteBase /
+RewriteCond %{ENV:REDIRECT_STATUS} ^200
+RewriteRule ^ - [L]
+RewriteCond %{QUERY_STRING} ^(.*)&?fbclid=[^&]+&?(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?%1%2 [R=301,L]
+RewriteCond %{QUERY_STRING} ^(.*)&?gidzl=[^&]+&?(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?%1%2 [R=301,L]
+RewriteCond %{QUERY_STRING} ^(.*)&?utm_medium=[^&]+&?(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?%1%2 [R=301,L]
+RewriteCond %{QUERY_STRING} ^(.*)&?utm_source=[^&]+&?(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?%1%2 [R=301,L]
+RewriteCond %{QUERY_STRING} ^(.*)&?utm_campaign=[^&]+&?(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?%1%2 [R=301,L]
+RewriteCond %{QUERY_STRING} ^(.*)&?zarsrc=[^&]+&?(.*)$ [NC]
+RewriteRule ^(.*)$ /$1?%1%2 [R=301,L]
+
+RewriteRule public -  [L]
+
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{SERVER_NAME}/$1 [L] 
+RewriteRule (.*)  index.php [L]
