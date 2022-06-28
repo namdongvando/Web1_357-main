@@ -82,4 +82,9 @@ class settingController extends indexController implements IController
     function trash()
     {
     }
+
+    public function Mailchangepassword()
+    {
+        $this->View();
+    }
 }

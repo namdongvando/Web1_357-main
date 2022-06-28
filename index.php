@@ -14,8 +14,10 @@ spl_autoload_register(function ($className) {
     //echo  "____" . $className . "____";
     include_once(__DIR__ . "/{$className}.php");
 });
-PhpMail::$Password = "tucauhinh";
-PhpMail::$Username = "tucauhinh";
+// mat khau: hnibhmpqmrwvweht
+// mail: namdong92@gmail.com
+PhpMail::$Password = "hnibhmpqmrwvweht";
+PhpMail::$Username = "namdong92@gmail.com";
 new DB();
 // set loại tiền tệ
 Common::$TypeMoney = $_SESSION["TypeMoney"] ?? Common::MoneyVND;

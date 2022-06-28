@@ -6,6 +6,7 @@ use App\IController;
 use Exception;
 use Model\Admin;
 use Model\Common;
+use Model\Mail\PhpMail;
 
 class adminController extends indexController implements IController
 {
@@ -87,8 +88,18 @@ class adminController extends indexController implements IController
         if (isset($_POST["btnLuu"])) {
             $user = $_POST["user"];
             $id = $user["Id"];
+            $admin = new Admin($id);
             $newPassword = $user["NewPassword"];
             $ModelAdmin->ResetPassword($id, $newPassword);
+            $Subject = "Thông báo đổi mật khẩu";
+            $file = "public\Maincontent\Mainchangepassword.html";
+            $content = file_get_contents($file);
+            $content = str_replace("[Password]", $newPassword, $content);
+            $content = str_replace("[Fullname]", $admin->Fullname, $content);
+            $Body = $content;
+            $AltBody = "Thông báo đổi mật khẩu";
+            $MailTo = [$admin->Email];
+            PhpMail::SendMailHttp($Subject, $Body, $AltBody, $MailTo);
         }
         // lấy id từ đường dẫn
         $id = $this->getParams(0);
