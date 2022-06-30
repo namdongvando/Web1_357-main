@@ -13,7 +13,8 @@ include "./vendor/autoload.php";
 spl_autoload_register(function ($className) {
     //echo  "____" . $className . "____";
     $className = str_replace("\\", "/", $className);
-    include_once(__DIR__ . "/{$className}.php");
+    $className = __DIR__ . "/{$className}.php";
+    include_once($className);
 });
 // mat khau: hnibhmpqmrwvweht
 // mail: namdong92@gmail.com
@@ -40,8 +41,9 @@ $app = new Applications();
 $className = "App\\{$app->getModule()}\\Controller\\{$app->getController()}Controller";
 
 $ActionName = $app->getAction();
-// echo $className;
-if (file_exists($className . ".php")) {
+$classNameFile = str_replace("\\", "/", $className);
+$classNameFile = __DIR__ . "/{$classNameFile}.php";
+if (file_exists($classNameFile)) {
     // có controller;
     $Controller = new $className();
     // kiem tra action
@@ -54,18 +56,6 @@ if (file_exists($className . ".php")) {
     }
 } else {
     // không có controller
-    $Controller = new App\backend\Controller\indexController();
-    $Controller->index();
+    // $Controller = new App\frontend\Controller\indexController();
+    // $Controller->index();
 }
-
-
-// echo $_GET["v"];
-
-use App\backend\Controller\BaseController;
-use App\backend\Controller\danhmucController;
-
-// echo "_index.php_";
-// $baseCtrl = new BaseController();
-// $baseCtrl->index();
-// $baseCtrl = new danhmucController();
-// $baseCtrl->index();

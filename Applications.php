@@ -136,9 +136,9 @@ class Applications
         $_Action = self::$ActionName;
         $_Theme = self::$Theme;
         $_Params = self::$Params;
-        $_Content = "App/{$_Module}/Views/{$_Controller}/{$_Action}.phtml";
+        $_Content = __DIR__ . "/App/{$_Module}/Views/{$_Controller}/{$_Action}.phtml";
         if ($_Theme != null)
-            $_Content = "Theme/{$_Theme}/{$_Module}/{$_Controller}/{$_Action}.phtml";
+            $_Content = __DIR__ . "/Theme/{$_Theme}/{$_Module}/{$_Controller}/{$_Action}.phtml";
 
         if (file_exists($_Content) == false) {
             exit("không có file content: {$_Content}");
@@ -146,9 +146,9 @@ class Applications
         // cấu hình linh động cho cac controller
         $_layout = self::$Layout;
         if ($_layout == null) {
-            include $_Content;
+            include_once($_Content);
         } else {
-            include $_layout;
+            include_once($_layout);
         }
     }
 

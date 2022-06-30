@@ -19,6 +19,7 @@ class indexController extends Applications
     // cart/index/index
     public function index()
     {
+
         $this->View();
     }
 
@@ -44,6 +45,7 @@ class indexController extends Applications
 
     public function add()
     {
+
         $giohang = new GioHang();
         $modelSanPham = new SanPham();
         // thêm sản phẩm có mã $this->getParams(0)
@@ -57,7 +59,7 @@ class indexController extends Applications
         // số lượng 1
         $sp["number"] = 1;
         $giohang->ThemGioHang($sp);
-        // chuyển đến giỏ hàng
+        // chuyển đến giỏ hàng 
         Common::ToUrl("/cart/index/index");
     }
     public function plus()
